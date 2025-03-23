@@ -17,5 +17,5 @@
 - 在Fabric服务端加载Forge Mod/在Forge服务端加载Fabric Mod的人
 - 哥们你LLBDS装JDK干什么
 - 把不同服务端之前的插件/Mod乱塞的人
-- 加载一个损坏的Mod/不兼容的Mod导致服务端主线程爆炸的人(之前见到过给Fabric装Forge Mod把Mixin炸了，Mxin又把Fabric API炸了，Fabric API把服务器主线程炸出来FATAL ERROR导致服务器崩溃的案例)
+- 加载一个损坏的Mod/不兼容的Mod导致服务端主线程爆炸的人
 - 服务端未下载完毕直接开服导致主线程爆炸的人

@@ -1,4 +1,4 @@
-Java 和 Kotlin 從口頭衝突上升到肢體衝突，開始互相肘擊
+Java 和 Kotlin 互相肘擊
 
 Oracle 拿出字節碼當成瓜子啃。JetBrains則拿出IntelliJ IDEA點外賣。
 

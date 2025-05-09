@@ -1,11 +1,17 @@
-Java 和 Kotlin 在技術層面產生衝突時，Oracle 拿出字節碼當成瓜子啃。JetBrains則拿出IntelliJ IDEA點外賣。
+Java 和 Kotlin 從口頭衝突上升到肢體衝突，開始互相肘擊
 
-.class文件突然開始被反編譯，然後蹦出來一條注釋：
+Oracle 拿出字節碼當成瓜子啃。JetBrains則拿出IntelliJ IDEA點外賣。
+
+然後Main.class扔出來一條注釋：
 
 ```java
 //正如 Spring 不能沒有 Bean，Java 和 Kotlin 不能失去 JVM
 ```
 
-Spring Boot 沒綳住，以```@Transactional```標記了一處地點
+Spring Boot 沒綳住，用```@Transactional```標記了一處地點
 
-而 Groovy 大將在看著Java和Kotlin斗法時被誤傷導致進程無響應，現在還在JRE搶救
+Java看見注釋紅如溫，於是使用
+```bash
+taskkill /F /IM java.exe
+```
+直接連著Kotlin一起爆了

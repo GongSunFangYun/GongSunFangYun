@@ -1,13 +1,11 @@
-Java和Kotlin打架
+Java 和 Kotlin 在技術層面產生衝突時，Oracle 拿出字節碼當成瓜子啃。JetBrains則拿出IntelliJ IDEA點外賣。
 
-Oracle站在旁邊用專利法當瓜子嗑，JetBrains默默掏出了IntelliJ IDEA的調試器當爆米花吃。
+.class文件突然開始被反編譯，然後蹦出來一條注釋：
 
-突然JVM舉起字節碼指令集當獎盃，臺下Clojure和Scala喊著"我們也算JVM語言"
-
-這時候.class文件反編譯后出現一行註釋：  
-```bash
-//正如Spring不能沒有Bean，Java和Kotlin不能失去JVM
+```java
+//正如 Spring 不能沒有 Bean，Java 和 Kotlin 不能失去 JVM
 ```
-Spring Boot见状直接給自己頭上打一個```@Transactional```防止笑到數據庫回滾
 
-Groovy大將你爲何發笑？原來是Groovy進程未響應
+Spring Boot 沒綳住，以```@Transactional```標記了一處地點
+
+而 Groovy 大將在看著Java和Kotlin斗法時被誤傷導致進程無響應，現在還在JRE搶救

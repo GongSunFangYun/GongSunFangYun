@@ -1,71 +1,767 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <title>项目说明 - 自研游戏架构</title>
-  <style>
-    body { font-family: "Segoe UI", sans-serif; background: #f9f9f9; color: #333; padding: 2em; line-height: 1.6; }
-    h1, h2 { color: #2c3e50; }
-    code { background: #eee; padding: 2px 6px; border-radius: 4px; }
-    .section { margin-bottom: 2em; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自然之美 | 优雅前端设计</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3a6e3f;
+            --secondary-color: #8a9a5b;
+            --accent-color: #c9a568;
+            --light-color: #f8f9f2;
+            --dark-color: #2c3e33;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark-color);
+        }
+        
+        /* 英雄区域样式 */
+        .hero {
+            padding: 160px 0 100px;
+            background: linear-gradient(135deg, rgba(142, 158, 117, 0.1) 0%, rgba(198, 210, 173, 0.2) 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            animation: fadeIn 1s ease;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--dark-color);
+            opacity: 0.9;
+            animation: fadeIn 1s ease 0.3s forwards;
+            opacity: 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 30px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: var(--transition);
+            border: 2px solid var(--primary-color);
+            animation: fadeIn 1s ease 0.6s forwards;
+            opacity: 0;
+        }
+        
+        .btn:hover {
+            background-color: transparent;
+            color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-color);
+            margin-left: 15px;
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* 特性部分样式 */
+        .features {
+            padding: 100px 0;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 3px;
+            background-color: var(--accent-color);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .section-title p {
+            color: var(--dark-color);
+            opacity: 0.7;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            padding: 40px 30px;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(58, 110, 63, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            color: var(--primary-color);
+            font-size: 2rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .feature-card p {
+            color: var(--dark-color);
+            opacity: 0.8;
+        }
+        
+        /* 画廊部分样式 */
+        .gallery {
+            padding: 100px 0;
+            background: linear-gradient(135deg, rgba(142, 158, 117, 0.1) 0%, rgba(198, 210, 173, 0.2) 100%);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            height: 250px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+            padding: 20px;
+            color: white;
+            transform: translateY(100%);
+            transition: var(--transition);
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        
+        /* 联系部分样式 */
+        .contact {
+            padding: 100px 0;
+            background-color: white;
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .contact-info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(58, 110, 63, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .contact-text h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .contact-form {
+            background-color: var(--light-color);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Noto Sans SC', sans-serif;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(58, 110, 63, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 70px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent-color);
+            bottom: 0;
+            left: 0;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 10px;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        
+        /* 动画 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .btn-outline {
+                margin-left: 0;
+                margin-top: 15px;
+                display: inline-block;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .contact-form {
+                padding: 25px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero {
+                padding: 130px 0 80px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .feature-card, .gallery-item {
+                max-width: 350px;
+                margin: 0 auto;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">
+                    <i class="fas fa-leaf"></i>
+                    自然之美
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#">特性</a></li>
+                    <li><a href="#">画廊</a></li>
+                    <li><a href="#">关于</a></li>
+                    <li><a href="#">联系</a></li>
+                </ul>
+                <button class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
 
-  <h1>🎮 项目说明：自研游戏架构与反作弊机制</h1>
+    <!-- 英雄区域 -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>探索大自然的无限魅力</h1>
+                <p>发现地球上最壮丽的景观，感受自然带来的宁静与和谐，加入我们保护地球家园的行动</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn">开始探索</a>
+                    <a href="#" class="btn btn-outline">了解更多</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <div class="section">
-    <h2>🧠 项目愿景</h2>
-    <p>本项目旨在构建一个完全自主、可扩展、社区驱动的游戏架构。无论是否商业化，开发者都能掌控分发、账号体系、反作弊机制与玩家自治系统。</p>
-  </div>
+    <!-- 特性部分 -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>为什么选择我们</h2>
+                <p>我们致力于提供最优质的自然体验和环境保护教育</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <h3>生态保护</h3>
+                    <p>我们积极参与全球生态保护项目，努力维护生物多样性，保护濒危物种。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-hiking"></i>
+                    </div>
+                    <h3>自然探险</h3>
+                    <p>组织专业的自然探险活动，带您深入人迹罕至的自然奇观，感受地球的脉搏。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3>环境教育</h3>
+                    <p>提供全面的环境教育课程，帮助各年龄段人群了解自然、尊重自然、保护自然。</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <div class="section">
-    <h2>🧱 架构概览</h2>
-    <ul>
-      <li>启动流程：<code>verify() → Awake() → 多线程初始化</code></li>
-      <li>反作弊机制：DLL校验 + 行为评分 + 主动崩溃</li>
-      <li>账号体系：支持微软账号 / Steam账号登录（PlayFab集成）</li>
-      <li>分发方式：静态网站 + CDN 国内外同步</li>
-      <li>赞助系统：免费本体 + 标牌激励（爱发电）</li>
-    </ul>
-  </div>
+    <!-- 画廊部分 -->
+    <section class="gallery">
+        <div class="container">
+            <div class="section-title">
+                <h2>自然画廊</h2>
+                <p>欣赏地球上令人惊叹的自然美景</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" alt="山脉景观">
+                    <div class="gallery-overlay">
+                        <h3>壮丽山脉</h3>
+                        <p>阿尔卑斯山脉的日出美景</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1470115636492-6d2b56f9146d" alt="森林景观">
+                    <div class="gallery-overlay">
+                        <h3>神秘森林</h3>
+                        <p>太平洋西北地区的温带雨林</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1426170042593-200f250dfdaf" alt="海滩景观">
+                    <div class="gallery-overlay">
+                        <h3>纯净海滩</h3>
+                        <p>马尔代夫清澈见底的海水</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <div class="section">
-    <h2>🔐 反作弊机制</h2>
-    <p>采用三层防护：</p>
-    <ol>
-      <li>启动校验：DLL完整性 + 签名验证</li>
-      <li>事件监听：异常行为触发主动崩溃</li>
-      <li>社区治理：举报系统 + 回放审查 + 投票踢人</li>
-    </ol>
-  </div>
+    <!-- 联系部分 -->
+    <section class="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>联系我们</h2>
+                <p>我们很乐意听取您的想法和建议</p>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-info-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>地址</h3>
+                            <p>北京市朝阳区自然保护中心, 100000</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>电话</h3>
+                            <p>+86 10 1234 5678</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>邮箱</h3>
+                            <p>info@naturebeauty.com</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">您的姓名</label>
+                            <input type="text" id="name" class="form-control" placeholder="请输入您的姓名">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">电子邮箱</label>
+                            <input type="email" id="email" class="form-control" placeholder="请输入您的电子邮箱">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">您的留言</label>
+                            <textarea id="message" class="form-control" placeholder="请输入您的留言"></textarea>
+                        </div>
+                        <button type="submit" class="btn">发送消息</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <div class="section">
-    <h2>🧩 技术栈与轮子复用</h2>
-    <ul>
-      <li>网络通信：<code>LiteNetLib</code> / <code>Mirror</code></li>
-      <li>账号系统：<code>PlayFab</code></li>
-      <li>数据处理：<code>Newtonsoft.Json</code> / <code>MessagePack</code></li>
-      <li>UI框架：Unity UI Toolkit</li>
-      <li>日志系统：<code>Serilog</code></li>
-    </ul>
-  </div>
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>关于我们</h3>
+                    <p>自然之美是一个致力于环境保护和自然教育的组织，我们希望通过努力让更多人爱上自然、保护自然。</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">首页</a></li>
+                        <li><a href="#">关于我们</a></li>
+                        <li><a href="#">我们的项目</a></li>
+                        <li><a href="#">最新活动</a></li>
+                        <li><a href="#">志愿者机会</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>更多信息</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">环境保护</a></li>
+                        <li><a href="#">生态旅游</a></li>
+                        <li><a href="#">可持续发展</a></li>
+                        <li><a href="#">野生动物保护</a></li>
+                        <li><a href="#">气候行动</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 自然之美 | 所有权利 reserved</p>
+            </div>
+        </div>
+    </footer>
 
-  <div class="section">
-    <h2>📜 授权策略</h2>
-    <p>若未获原作者授权：游戏本体免费，赞助仅提供标牌。</p>
-    <p>若获得授权：游戏可转为买断制，赞助系统保留。</p>
-  </div>
-
-  <div class="section">
-    <h2>🎓 毕业设计定位</h2>
-    <p>本项目作为计算机专业毕业设计，具备完整的架构设计、模块实现、反作弊机制与社区治理系统，技术深度与工程完整度兼备。</p>
-  </div>
-
-  <div class="section">
-    <h2>📢 开发者宣言</h2>
-    <p>“大饼已经画好，现在开始和面。没人玩也没事，我愿意做，也愿意完成。”</p>
-  </div>
-
+    <script>
+        // 简单的滚动效果
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                header.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.1)';
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+        
+        // 移动菜单切换
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        
+        hamburger.addEventListener('click', function() {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+    </script>
 </body>
 </html>

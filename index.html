@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>项目说明 - 自研游戏架构</title>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; background: #f9f9f9; color: #333; padding: 2em; line-height: 1.6; }
+    h1, h2 { color: #2c3e50; }
+    code { background: #eee; padding: 2px 6px; border-radius: 4px; }
+    .section { margin-bottom: 2em; }
+  </style>
+</head>
+<body>
+
+  <h1>🎮 项目说明：自研游戏架构与反作弊机制</h1>
+
+  <div class="section">
+    <h2>🧠 项目愿景</h2>
+    <p>本项目旨在构建一个完全自主、可扩展、社区驱动的游戏架构。无论是否商业化，开发者都能掌控分发、账号体系、反作弊机制与玩家自治系统。</p>
+  </div>
+
+  <div class="section">
+    <h2>🧱 架构概览</h2>
+    <ul>
+      <li>启动流程：<code>verify() → Awake() → 多线程初始化</code></li>
+      <li>反作弊机制：DLL校验 + 行为评分 + 主动崩溃</li>
+      <li>账号体系：支持微软账号 / Steam账号登录（PlayFab集成）</li>
+      <li>分发方式：静态网站 + CDN 国内外同步</li>
+      <li>赞助系统：免费本体 + 标牌激励（爱发电）</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>🔐 反作弊机制</h2>
+    <p>采用三层防护：</p>
+    <ol>
+      <li>启动校验：DLL完整性 + 签名验证</li>
+      <li>事件监听：异常行为触发主动崩溃</li>
+      <li>社区治理：举报系统 + 回放审查 + 投票踢人</li>
+    </ol>
+  </div>
+
+  <div class="section">
+    <h2>🧩 技术栈与轮子复用</h2>
+    <ul>
+      <li>网络通信：<code>LiteNetLib</code> / <code>Mirror</code></li>
+      <li>账号系统：<code>PlayFab</code></li>
+      <li>数据处理：<code>Newtonsoft.Json</code> / <code>MessagePack</code></li>
+      <li>UI框架：Unity UI Toolkit</li>
+      <li>日志系统：<code>Serilog</code></li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>📜 授权策略</h2>
+    <p>若未获原作者授权：游戏本体免费，赞助仅提供标牌。</p>
+    <p>若获得授权：游戏可转为买断制，赞助系统保留。</p>
+  </div>
+
+  <div class="section">
+    <h2>🎓 毕业设计定位</h2>
+    <p>本项目作为计算机专业毕业设计，具备完整的架构设计、模块实现、反作弊机制与社区治理系统，技术深度与工程完整度兼备。</p>
+  </div>
+
+  <div class="section">
+    <h2>📢 开发者宣言</h2>
+    <p>“大饼已经画好，现在开始和面。没人玩也没事，我愿意做，也愿意完成。”</p>
+  </div>
+
+</body>
+</html>

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BWCE</title>
+    <title>BWCE - 社区项目</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -13,54 +14,137 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 20px;
+            color: #fff;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* 背景动画元素 */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .bg-animation span {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            animation: float 15s linear infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
         }
         
         .container {
             max-width: 1200px;
             width: 100%;
             text-align: center;
+            z-index: 1;
         }
         
         header {
             margin: 40px 0;
+            position: relative;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .logo i {
+            font-size: 50px;
+            color: white;
         }
         
         h1 {
-            color: #2c3e50;
-            font-size: 2.5rem;
+            color: #fff;
+            font-size: 3rem;
             margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
         }
         
         .subtitle {
-            color: #7f8c8d;
-            font-size: 1.2rem;
+            color: #a3d9ff;
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .subtitle::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, #00b4db, #0083b0);
+            border-radius: 3px;
         }
         
         .image-container {
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            margin: 30px auto;
             max-width: 90%;
             display: inline-block;
-            transition: transform 0.3s ease;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .image-container:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
         }
         
         .image-wrapper {
             overflow: hidden;
-            border-radius: 8px;
-            line-height: 0; /* 移除图片下方的间隙 */
+            border-radius: 12px;
+            line-height: 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .image-wrapper:hover {
+            transform: scale(1.02);
         }
         
         img {
@@ -70,24 +154,104 @@
         }
         
         .image-info {
-            margin-top: 20px;
-            color: #7f8c8d;
+            margin-top: 25px;
+            color: #a3d9ff;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .audio-player {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            padding: 15px 25px;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .audio-player button {
+            background: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+        
+        .audio-player button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(0, 180, 219, 0.5);
+        }
+        
+        .audio-info {
+            text-align: left;
+        }
+        
+        .audio-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .audio-subtitle {
             font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        .countdown {
+            margin-top: 40px;
+            font-size: 1.2rem;
+            color: #a3d9ff;
+        }
+        
+        .countdown-number {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin: 0 5px;
+            font-weight: bold;
+            min-width: 80px;
         }
         
         footer {
-            margin-top: 40px;
-            color: #7f8c8d;
-            font-size: 0.9rem;
+            margin-top: 60px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1rem;
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            max-width: 600px;
         }
         
         @media (max-width: 768px) {
             h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
             }
             
             .image-container {
-                padding: 15px;
+                padding: 20px;
+            }
+            
+            .logo {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .logo i {
+                font-size: 40px;
             }
         }
         
@@ -99,12 +263,30 @@
             .subtitle {
                 font-size: 1rem;
             }
+            
+            .audio-player {
+                flex-direction: column;
+                border-radius: 20px;
+                padding: 20px;
+            }
+            
+            .countdown-number {
+                display: block;
+                margin: 10px auto;
+                max-width: 120px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- 背景动画 -->
+    <div class="bg-animation" id="bg-animation"></div>
+    
     <div class="container">
         <header>
+            <div class="logo">
+                <i class="fas fa-users"></i>
+            </div>
             <h1>BW社区项目</h1>
             <p class="subtitle">预计2028年推出</p>
         </header>
@@ -113,17 +295,112 @@
             <div class="image-container">
                 <div class="image-wrapper">
                     <img src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAALpfWiydaroCO83R8xjMCexOldT_ofsAAI4FQACnJuYVZZRvdr_r8KVNgQ.png" 
-                         alt="展示图片">
+                         alt="BW社区项目展示">
                 </div>
-                <audio src="BS.mp3" autoplay></audio>
+                <p class="image-info">BW社区项目是一个创新的社区平台，致力于为用户提供最佳的社交体验。</p>
+            </div>
+            
+            <div class="audio-player">
+                <button id="playPauseBtn">
+                    <i class="fas fa-pause"></i>
+                </button>
+                <div class="audio-info">
+                    <div class="audio-title">背景音乐</div>
+                    <div class="audio-subtitle">BW社区主题曲</div>
+                </div>
+            </div>
+            
+            <div class="countdown">
+                <p>距离项目发布还有</p>
+                <div class="countdown-number" id="countdown">计算中...</div>
             </div>
         </main>
         
         <footer>
-            <p>© Blish</p>
+            <p>© 2023 Blish - BW社区项目 | 期待与您相见</p>
         </footer>
     </div>
+    
+    <audio id="bgAudio" loop>
+        <source src="mainmenu.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        function createBGElements() {
+            const bgAnimation = document.getElementById('bg-animation');
+            const elements = 25;
+            
+            for (let i = 0; i < elements; i++) {
+                const span = document.createElement('span');
+                
+                const size = Math.random() * 20 + 5;
+                span.style.width = `${size}px`;
+                span.style.height = `${size}px`;
+                
+                span.style.left = `${Math.random() * 100}%`;
+                span.style.top = `${Math.random() * 100}%`;
+                
+                span.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                span.style.animationDelay = `${Math.random() * 5}s`;
+                
+                bgAnimation.appendChild(span);
+            }
+        }
+        
+        function setupAudio() {
+            const audio = document.getElementById('bgAudio');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const playIcon = playPauseBtn.querySelector('i');
+            
+            audio.play().then(() => {
+                playIcon.classList.remove('fa-play');
+                playIcon.classList.add('fa-pause');
+            }).catch(error => {
+                console.log('自动播放失败，需要用户交互:', error);
+                playIcon.classList.remove('fa-pause');
+                playIcon.classList.add('fa-play');
+            });
+            
+            playPauseBtn.addEventListener('click', () => {
+                if (audio.paused) {
+                    audio.play();
+                    playIcon.classList.remove('fa-play');
+                    playIcon.classList.add('fa-pause');
+                } else {
+                    audio.pause();
+                    playIcon.classList.remove('fa-pause');
+                    playIcon.classList.add('fa-play');
+                }
+            });
+        }
+        
+        function updateCountdown() {
+            const targetDate = new Date('2028-01-01');
+            const now = new Date();
+            
+            const diff = targetDate - now;
+            
+            if (diff <= 0) {
+                document.getElementById('countdown').textContent = '已发布！';
+                return;
+            }
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdown').textContent = 
+                `${days}天 ${hours}小时 ${minutes}分 ${seconds}秒`;
+        }
+        
+        window.addEventListener('DOMContentLoaded', () => {
+            createBGElements();
+            setupAudio();
+            updateCountdown();
+            
+            setInterval(updateCountdown, 1000);
+        });
+    </script>
 </body>
 </html>
-
-

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BWCE</title>
+    <title>BWCE - Blackwake Community Edition</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -13,44 +13,48 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            font-family: 'Oxanium', 'Rajdhani', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0e17 0%, #1a283f 50%, #14213d 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 20px;
-            color: #fff;
+            color: #e5e5e5;
             position: relative;
             overflow-x: hidden;
         }
         
-        /* 背景动画元素 */
-        .bg-animation {
+        /* 海盗主题背景 */
+        .pirate-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.3;
+            opacity: 0.15;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M50,0 C60,20 80,30 100,30 C90,50 90,70 70,80 C80,60 60,50 50,30 C40,50 20,60 30,80 C10,70 10,50 0,30 C20,30 40,20 50,0Z" fill="%23d4af37"/></svg>');
+            background-size: 200px;
         }
         
-        .bg-animation span {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-            animation: float 15s linear infinite;
+        /* 海洋波浪动画 */
+        .ocean-waves {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="%230077be"/><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="%230077be"/><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%230077be"/></svg>');
+            background-size: 1200px 100px;
+            animation: wave 10s linear infinite;
+            z-index: -1;
+            opacity: 0.6;
         }
         
-        @keyframes float {
-            0% { transform: translateY(0) translateX(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+        @keyframes wave {
+            0% { background-position-x: 0; }
+            100% { background-position-x: 1200px; }
         }
         
         .container {
@@ -61,90 +65,117 @@
         }
         
         header {
-            margin: 40px 0;
+            margin: 30px 0;
             position: relative;
         }
         
         .logo {
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, #d4af37 0%, #aa8539 100%);
             border-radius: 50%;
             margin: 0 auto 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-            animation: pulse 2s infinite;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
+            border: 3px solid #aa8539;
+            position: relative;
+            overflow: hidden;
         }
         
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        .logo::before {
+            content: '';
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"><path d="M80,0 L90,40 L130,40 L100,60 L110,100 L80,80 L50,100 L60,60 L30,40 L70,40 Z" fill="%23ffffff33"/></svg>');
+            animation: rotate 30s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         .logo i {
-            font-size: 50px;
-            color: white;
+            font-size: 60px;
+            color: #2c1810;
+            text-shadow: 0 0 5px rgba(212, 175, 55, 0.8);
         }
         
         h1 {
-            color: #fff;
-            font-size: 3rem;
+            color: #d4af37;
+            font-size: 3.5rem;
             margin-bottom: 10px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-transform: uppercase;
         }
         
         .subtitle {
-            color: #a3d9ff;
-            font-size: 1.4rem;
+            color: #fca311;
+            font-size: 1.6rem;
             margin-bottom: 30px;
             position: relative;
             display: inline-block;
+            font-weight: 600;
         }
         
         .subtitle::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 50px;
-            height: 3px;
-            background: linear-gradient(90deg, #00b4db, #0083b0);
-            border-radius: 3px;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #d4af37, #fca311);
+            border-radius: 2px;
         }
         
         .image-container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            padding: 30px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            padding: 25px;
             margin: 30px auto;
             max-width: 90%;
             display: inline-block;
             transition: all 0.4s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid #d4af37;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .image-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+            pointer-events: none;
         }
         
         .image-container:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.3);
         }
         
         .image-wrapper {
             overflow: hidden;
-            border-radius: 12px;
+            border-radius: 10px;
             line-height: 0;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
             transition: all 0.3s ease;
+            border: 1px solid #5a4b2a;
         }
         
         .image-wrapper:hover {
-            transform: scale(1.02);
+            transform: scale(1.03);
         }
         
         img {
@@ -154,42 +185,44 @@
         }
         
         .image-info {
-            margin-top: 25px;
-            color: #a3d9ff;
-            font-size: 1.1rem;
+            margin-top: 20px;
+            color: #fca311;
+            font-size: 1.2rem;
             line-height: 1.6;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         }
         
         .audio-player {
             margin-top: 30px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
             padding: 15px 25px;
             display: inline-flex;
             align-items: center;
             gap: 15px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid #5a4b2a;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
         }
         
         .audio-player button {
-            background: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+            background: linear-gradient(135deg, #d4af37 0%, #aa8539 100%);
             border: none;
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            color: white;
+            color: #2c1810;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 18px;
             transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
         }
         
         .audio-player button:hover {
             transform: scale(1.1);
-            box-shadow: 0 0 15px rgba(0, 180, 219, 0.5);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.7);
         }
         
         .audio-info {
@@ -199,46 +232,55 @@
         .audio-title {
             font-weight: 600;
             margin-bottom: 5px;
+            color: #d4af37;
         }
         
         .audio-subtitle {
             font-size: 0.9rem;
-            opacity: 0.7;
+            opacity: 0.8;
+            color: #fca311;
         }
         
         .countdown {
             margin-top: 40px;
-            font-size: 1.2rem;
-            color: #a3d9ff;
+            font-size: 1.3rem;
+            color: #fca311;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         }
         
         .countdown-number {
             display: inline-block;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px 25px;
             border-radius: 10px;
-            margin: 0 5px;
+            margin: 15px 5px;
             font-weight: bold;
-            min-width: 80px;
+            min-width: 100px;
+            border: 1px solid #5a4b2a;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            color: #d4af37;
+            font-size: 1.4rem;
         }
         
         footer {
             margin-top: 60px;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(212, 175, 55, 0.7);
             font-size: 1rem;
             padding: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
             width: 100%;
             max-width: 600px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         }
         
+        /* 响应式设计 */
         @media (max-width: 768px) {
             h1 {
-                font-size: 2.2rem;
+                font-size: 2.5rem;
             }
             
             .subtitle {
-                font-size: 1.1rem;
+                font-size: 1.3rem;
             }
             
             .image-container {
@@ -246,28 +288,12 @@
             }
             
             .logo {
-                width: 100px;
-                height: 100px;
+                width: 110px;
+                height: 110px;
             }
             
             .logo i {
-                font-size: 40px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            .subtitle {
-                font-size: 1rem;
-            }
-            
-            .audio-player {
-                flex-direction: column;
-                border-radius: 20px;
-                padding: 20px;
+                font-size: 45px;
             }
             
             .countdown-number {
@@ -276,18 +302,44 @@
                 max-width: 120px;
             }
         }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .audio-player {
+                flex-direction: column;
+                border-radius: 10px;
+                padding: 20px;
+            }
+            
+            .countdown-number {
+                font-size: 1.2rem;
+                padding: 12px 20px;
+            }
+        }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- 背景动画 -->
-    <div class="bg-animation" id="bg-animation"></div>
+    <!-- 海盗主题背景 -->
+    <div class="pirate-bg"></div>
+    
+    <!-- 海洋波浪 -->
+    <div class="ocean-waves"></div>
     
     <div class="container">
         <header>
             <div class="logo">
-                <i class="fas fa-users"></i>
+                <i class="fas fa-anchor"></i>
             </div>
-            <h1>BW社区项目</h1>
+            <h1>BWCE</h1>
+            <p class="subtitle">Blackwake Community Edition</p>
             <p class="subtitle">预计2028年推出</p>
         </header>
         
@@ -297,8 +349,8 @@
                     <img src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAALpfWiydaroCO83R8xjMCexOldT_ofsAAI4FQACnJuYVZZRvdr_r8KVNgQ.png" 
                          alt="BW社区项目展示">
                 </div>
-                <p class="image-info">BW社区项目（全程Blackwake Community Edition）</p>
-                <p class="image-info">旨在于重拾对Blackwake的开发，并持续更新迭代。</p>
+                <p class="image-info">Blackwake Community Edition</p>
+                <p class="image-info">旨在于重拾对Blackwake的开发，并持续更新迭代</p>
             </div>
             
             <div class="audio-player">
@@ -307,7 +359,7 @@
                 </button>
                 <div class="audio-info">
                     <div class="audio-title">背景音乐</div>
-                    <div class="audio-subtitle">Blackwake-Main-Theme</div>
+                    <div class="audio-subtitle">Blackwake - Main Theme</div>
                 </div>
             </div>
             
@@ -318,7 +370,7 @@
         </main>
         
         <footer>
-            <p>© 2024-2025 Blish - BW社区项目 | 期待与您相见</p>
+            <p>© 2024-2025 Blish - BWCE | 期待与您海上相见</p>
         </footer>
     </div>
     
@@ -327,41 +379,26 @@
     </audio>
 
     <script>
-        function createBGElements() {
-            const bgAnimation = document.getElementById('bg-animation');
-            const elements = 25;
-            
-            for (let i = 0; i < elements; i++) {
-                const span = document.createElement('span');
-                
-                const size = Math.random() * 20 + 5;
-                span.style.width = `${size}px`;
-                span.style.height = `${size}px`;
-                
-                span.style.left = `${Math.random() * 100}%`;
-                span.style.top = `${Math.random() * 100}%`;
-                
-                span.style.animationDuration = `${Math.random() * 10 + 10}s`;
-                span.style.animationDelay = `${Math.random() * 5}s`;
-                
-                bgAnimation.appendChild(span);
-            }
-        }
-        
         function setupAudio() {
             const audio = document.getElementById('bgAudio');
             const playPauseBtn = document.getElementById('playPauseBtn');
             const playIcon = playPauseBtn.querySelector('i');
             
-            audio.play().then(() => {
-                playIcon.classList.remove('fa-play');
-                playIcon.classList.add('fa-pause');
-            }).catch(error => {
-                console.log('自动播放失败，需要用户交互:', error);
-                playIcon.classList.remove('fa-pause');
-                playIcon.classList.add('fa-play');
-            });
+            // 尝试自动播放
+            const playPromise = audio.play();
             
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    playIcon.classList.remove('fa-play');
+                    playIcon.classList.add('fa-pause');
+                }).catch(error => {
+                    console.log('自动播放失败，需要用户交互:', error);
+                    playIcon.classList.remove('fa-pause');
+                    playIcon.classList.add('fa-play');
+                });
+            }
+            
+            // 播放/暂停按钮事件
             playPauseBtn.addEventListener('click', () => {
                 if (audio.paused) {
                     audio.play();
@@ -396,7 +433,6 @@
         }
         
         window.addEventListener('DOMContentLoaded', () => {
-            createBGElements();
             setupAudio();
             updateCountdown();
             
@@ -405,5 +441,3 @@
     </script>
 </body>
 </html>
-
-

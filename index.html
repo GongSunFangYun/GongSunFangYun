@@ -62,11 +62,18 @@
             width: 100%;
             text-align: center;
             z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         
         header {
             margin: 30px 0;
             position: relative;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         
         .logo {
@@ -192,38 +199,42 @@
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         }
         
+        /* 修改音频播放器为固定位置 */
         .audio-player {
-            margin-top: 30px;
-            background: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
             border-radius: 10px;
-            padding: 15px 25px;
+            padding: 15px 20px;
             display: inline-flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             border: 1px solid #5a4b2a;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
         }
-
-        .audio-player.fixed {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 1000;
-        margin-top: 0;
+        
+        .audio-player:hover {
+            background: rgba(0, 0, 0, 0.8);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
         }
         
         .audio-player button {
             background: linear-gradient(135deg, #d4af37 0%, #aa8539 100%);
             border: none;
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             color: #2c1810;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 16px;
             transition: all 0.3s ease;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
         }
@@ -239,12 +250,13 @@
         
         .audio-title {
             font-weight: 600;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
             color: #d4af37;
+            font-size: 0.95rem;
         }
         
         .audio-subtitle {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             opacity: 0.8;
             color: #fca311;
         }
@@ -309,6 +321,27 @@
                 margin: 10px auto;
                 max-width: 120px;
             }
+            
+            /* 移动端调整音频播放器 */
+            .audio-player {
+                bottom: 15px;
+                right: 15px;
+                padding: 12px 15px;
+            }
+            
+            .audio-player button {
+                width: 40px;
+                height: 40px;
+                font-size: 14px;
+            }
+            
+            .audio-title {
+                font-size: 0.85rem;
+            }
+            
+            .audio-subtitle {
+                font-size: 0.75rem;
+            }
         }
         
         @media (max-width: 480px) {
@@ -321,14 +354,28 @@
             }
             
             .audio-player {
-                flex-direction: column;
-                border-radius: 10px;
-                padding: 20px;
+                bottom: 10px;
+                right: 10px;
+                padding: 10px 12px;
+                flex-direction: row; /* 保持水平布局 */
             }
             
             .countdown-number {
                 font-size: 1.2rem;
                 padding: 12px 20px;
+            }
+            
+            /* 超小屏幕调整 */
+            @media (max-width: 360px) {
+                .audio-player {
+                    flex-direction: column;
+                    gap: 8px;
+                    padding: 10px;
+                }
+                
+                .audio-info {
+                    text-align: center;
+                }
             }
         }
     </style>
@@ -361,16 +408,6 @@
                 <p class="image-info">旨在于重拾对Blackwake的开发，并持续更新迭代</p>
             </div>
             
-            <div class="audio-player">
-                <button id="playPauseBtn">
-                    <i class="fas fa-pause"></i>
-                </button>
-                <div class="audio-info">
-                    <div class="audio-title">背景音乐</div>
-                    <div class="audio-subtitle">Blackwake - Main Theme</div>
-                </div>
-            </div>
-            
             <div class="countdown">
                 <p>距离项目发布还有</p>
                 <div class="countdown-number" id="countdown">计算中...</div>
@@ -380,6 +417,17 @@
         <footer>
             <p>© 2024-2025 Blish - BWCE | 期待与您海上相见</p>
         </footer>
+    </div>
+    
+    <!-- 固定在右下角的音频播放器 -->
+    <div class="audio-player">
+        <button id="playPauseBtn">
+            <i class="fas fa-pause"></i>
+        </button>
+        <div class="audio-info">
+            <div class="audio-title">背景音乐</div>
+            <div class="audio-subtitle">Blackwake - Main Theme</div>
+        </div>
     </div>
     
     <audio id="bgAudio" loop>
@@ -449,4 +497,3 @@
     </script>
 </body>
 </html>
-

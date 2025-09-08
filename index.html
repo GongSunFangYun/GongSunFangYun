@@ -414,7 +414,7 @@
             <i class="fas fa-play"></i>
         </button>
         <div class="audio-info">
-            <div class="audio-title">背景音乐</div>
+            <div class="audio-title">播放音乐</div>
             <div class="audio-subtitle">Blackwake - Main Theme</div>
         </div>
     </div>
@@ -424,13 +424,11 @@
     </audio>
 
     <script>
-        // 获取元素
         const audio = document.getElementById('bgAudio');
         const playPauseBtn = document.getElementById('playPauseBtn');
         const playIcon = playPauseBtn.querySelector('i');
         const audioPlayer = document.getElementById('audioPlayer');
         
-        // 隐藏计时器和用户交互标志
         let hideTimer = null;
         let userInteracted = false;
         
@@ -463,9 +461,8 @@
                 }
             });
             
-            // 点击播放器按钮控制播放/暂停
             playPauseBtn.addEventListener('click', (e) => {
-                e.stopPropagation(); // 防止触发body的点击事件
+                e.stopPropagation();
                 if (!userInteracted) {
                     playMusic();
                     userInteracted = true;
@@ -474,7 +471,6 @@
                 }
             });
             
-            // 点击播放器区域阻止隐藏
             audioPlayer.addEventListener('click', (e) => {
                 e.stopPropagation();
                 resetHideTimer();
@@ -511,7 +507,7 @@
             clearTimeout(hideTimer);
             hideTimer = setTimeout(() => {
                 audioPlayer.classList.add('hidden');
-            }, 3000); // 3秒后隐藏
+            }, 500);
         }
         
         function resetHideTimer() {
@@ -548,12 +544,10 @@
             
             setInterval(updateCountdown, 1000);
             
-            // 鼠标移动到播放器区域时显示
             audioPlayer.addEventListener('mouseenter', resetHideTimer);
-            
-            // 触摸设备支持
             audioPlayer.addEventListener('touchstart', resetHideTimer);
         });
     </script>
 </body>
 </html>
+

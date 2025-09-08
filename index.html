@@ -262,26 +262,6 @@
             color: #fca311;
         }
         
-        /* 空格键提示 */
-        .spacebar-hint {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.6);
-            color: #d4af37;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            z-index: 999;
-            animation: fadeInOut 2s ease-in-out infinite;
-            display: none;
-        }
-        
-        @keyframes fadeInOut {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-        
         .countdown {
             margin-top: 40px;
             font-size: 1.3rem;
@@ -363,12 +343,6 @@
             .audio-subtitle {
                 font-size: 0.75rem;
             }
-            
-            .spacebar-hint {
-                bottom: 70px;
-                right: 15px;
-                font-size: 0.7rem;
-            }
         }
         
         @media (max-width: 480px) {
@@ -389,13 +363,6 @@
             .countdown-number {
                 font-size: 1.2rem;
                 padding: 12px 20px;
-            }
-            
-            /* 超小屏幕调整 */
-            @media (max-width: 360px) {
-                .audio-player {
-                    padding: 8px 10px;
-                }
             }
         }
     </style>
@@ -442,9 +409,9 @@
     </div>
     
     <!-- 固定在右下角的音频播放器 -->
-    <div class="audio-player">
+    <div class="audio-player" id="audioPlayer">
         <button id="playPauseBtn">
-            <i class="fas fa-pause"></i>
+            <i class="fas fa-play"></i>
         </button>
         <div class="audio-info">
             <div class="audio-title">背景音乐</div>
@@ -457,37 +424,102 @@
     </audio>
 
     <script>
+        // 获取元素
+        const audio = document.getElementById('bgAudio');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const playIcon = playPauseBtn.querySelector('i');
+        const audioPlayer = document.getElementById('audioPlayer');
+        
+        // 隐藏计时器和用户交互标志
+        let hideTimer = null;
+        let userInteracted = false;
+        
         function setupAudio() {
-            const audio = document.getElementById('bgAudio');
-            const playPauseBtn = document.getElementById('playPauseBtn');
-            const playIcon = playPauseBtn.querySelector('i');
-            
-            // 尝试自动播放
-            const playPromise = audio.play();
-            
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    playIcon.classList.remove('fa-play');
-                    playIcon.classList.add('fa-pause');
-                }).catch(error => {
-                    console.log('自动播放失败，需要用户交互:', error);
-                    playIcon.classList.remove('fa-pause');
-                    playIcon.classList.add('fa-play');
-                });
-            }
-            
-            // 播放/暂停按钮事件
-            playPauseBtn.addEventListener('click', () => {
-                if (audio.paused) {
-                    audio.play();
-                    playIcon.classList.remove('fa-play');
-                    playIcon.classList.add('fa-pause');
-                } else {
-                    audio.pause();
-                    playIcon.classList.remove('fa-pause');
-                    playIcon.classList.add('fa-play');
+            // 点击屏幕任意位置播放音乐
+            document.addEventListener('click', (e) => {
+                if (!userInteracted) {
+                    // 第一次点击：播放音乐
+                    playMusic();
+                    userInteracted = true;
+                } else if (audio.paused) {
+                    // 后续点击：如果暂停了就播放
+                    playMusic();
                 }
             });
+            
+            // 空格键控制播放/暂停
+            document.addEventListener('keydown', (e) => {
+                if (e.code === 'Space') {
+                    e.preventDefault(); // 防止页面滚动
+                    
+                    if (!userInteracted) {
+                        // 第一次空格键：播放音乐
+                        playMusic();
+                        userInteracted = true;
+                    } else {
+                        // 后续空格键：切换播放/暂停
+                        togglePlayback();
+                    }
+                }
+            });
+            
+            // 点击播放器按钮控制播放/暂停
+            playPauseBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // 防止触发body的点击事件
+                if (!userInteracted) {
+                    playMusic();
+                    userInteracted = true;
+                } else {
+                    togglePlayback();
+                }
+            });
+            
+            // 点击播放器区域阻止隐藏
+            audioPlayer.addEventListener('click', (e) => {
+                e.stopPropagation();
+                resetHideTimer();
+            });
+        }
+        
+        function playMusic() {
+            audio.play().then(() => {
+                playIcon.classList.remove('fa-play');
+                playIcon.classList.add('fa-pause');
+                startHideTimer();
+            }).catch(error => {
+                console.log('播放失败:', error);
+            });
+        }
+        
+        function togglePlayback() {
+            if (audio.paused) {
+                audio.play();
+                playIcon.classList.remove('fa-play');
+                playIcon.classList.add('fa-pause');
+                startHideTimer();
+            } else {
+                audio.pause();
+                playIcon.classList.remove('fa-pause');
+                playIcon.classList.add('fa-play');
+                // 暂停时显示播放器
+                audioPlayer.classList.remove('hidden');
+                clearTimeout(hideTimer);
+            }
+        }
+        
+        function startHideTimer() {
+            clearTimeout(hideTimer);
+            hideTimer = setTimeout(() => {
+                audioPlayer.classList.add('hidden');
+            }, 3000); // 3秒后隐藏
+        }
+        
+        function resetHideTimer() {
+            audioPlayer.classList.remove('hidden');
+            clearTimeout(hideTimer);
+            if (!audio.paused) {
+                startHideTimer();
+            }
         }
         
         function updateCountdown() {
@@ -509,17 +541,19 @@
             document.getElementById('countdown').textContent = 
                 `${days}天 ${hours}小时 ${minutes}分 ${seconds}秒`;
         }
-        // HOW???
+        
         window.addEventListener('DOMContentLoaded', () => {
             setupAudio();
             updateCountdown();
             
             setInterval(updateCountdown, 1000);
+            
+            // 鼠标移动到播放器区域时显示
+            audioPlayer.addEventListener('mouseenter', resetHideTimer);
+            
+            // 触摸设备支持
+            audioPlayer.addEventListener('touchstart', resetHideTimer);
         });
     </script>
 </body>
 </html>
-
-
-
-

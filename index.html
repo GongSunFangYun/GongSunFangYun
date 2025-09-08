@@ -25,17 +25,30 @@
             overflow-x: hidden;
         }
         
-        /* 海盗主题背景 */
-        .pirate-bg {
+        /* 自定义背景图片与暗色遮罩 */
+        .custom-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
-            opacity: 0.15;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M50,0 C60,20 80,30 100,30 C90,50 90,70 70,80 C80,60 60,50 50,30 C40,50 20,60 30,80 C10,70 10,50 0,30 C20,30 40,20 50,0Z" fill="%23d4af37"/></svg>');
-            background-size: 200px;
+            z-index: -2;
+            background-image: url('https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEBlRpovmPYRIiWrrwJuutIDgABQXIT8P8AAvopAAJ-lPFVPoMxr_1R9mY2BA.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        /* 暗色半透明遮罩 */
+        .custom-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7); /* 暗色半透明遮罩 */
+            z-index: 1;
         }
         
         /* 海洋波浪动画 */
@@ -199,7 +212,7 @@
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         }
         
-        /* 修改音频播放器为固定位置 */
+        /* 固定在右下角的音频播放器 */
         .audio-player {
             position: fixed;
             bottom: 20px;
@@ -382,8 +395,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- 海盗主题背景 -->
-    <div class="pirate-bg"></div>
+    <!-- 自定义背景图片与暗色遮罩 -->
+    <div class="custom-bg"></div>
     
     <!-- 海洋波浪 -->
     <div class="ocean-waves"></div>
@@ -395,18 +408,17 @@
             </div>
             <h1>BWCE</h1>
             <p class="subtitle">Blackwake Community Edition</p>
-            <p class="subtitle">预计2029年中旬推出</p>
+            <p class="subtitle">预计2028年推出</p>
         </header>
         
         <main>
             <div class="image-container">
                 <div class="image-wrapper">
                     <img src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAALpfWiydaroCO83R8xjMCexOldT_ofsAAI4FQACnJuYVZZRvdr_r8KVNgQ.png" 
-                         alt="Blackwake社区版">
+                         alt="BW社区项目展示">
                 </div>
                 <p class="image-info">Blackwake Community Edition</p>
-                <p class="image-info">本项目旨在于重拾对Blackwake的开发</p>
-                <p class="image-info">并更新全新的游戏机制与玩法</p>
+                <p class="image-info">旨在于重拾对Blackwake的开发，并持续更新迭代</p>
             </div>
             
             <div class="countdown">
@@ -416,8 +428,7 @@
         </main>
         
         <footer>
-            <p>© 2024-2025 -=Bilishenxds=- - BWCE | 期待与您海上相见</p>
-            <p>附言：祝各位国服煤炭能等到游戏发布的那一天，而不是原地坐化成钻石了</p>
+            <p>© 2024-2025 Blish - BWCE | 期待与您海上相见</p>
         </footer>
     </div>
     
@@ -471,7 +482,7 @@
         }
         
         function updateCountdown() {
-            const targetDate = new Date('2029-6-26');
+            const targetDate = new Date('2028-01-01');
             const now = new Date();
             
             const diff = targetDate - now;
@@ -489,7 +500,7 @@
             document.getElementById('countdown').textContent = 
                 `${days}天 ${hours}小时 ${minutes}分 ${seconds}秒`;
         }
-        
+        // HOW???
         window.addEventListener('DOMContentLoaded', () => {
             setupAudio();
             updateCountdown();
@@ -499,8 +510,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-

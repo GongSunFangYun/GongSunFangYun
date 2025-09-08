@@ -47,7 +47,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7); /* 暗色半透明遮罩 */
+            background: rgba(0, 0, 0, 0.7);
             z-index: 1;
         }
         
@@ -193,7 +193,7 @@
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         }
         
-        /* 固定在右下角的音频播放器 */
+        /* 修改后的音频播放器 - 支持隐藏动画 */
         .audio-player {
             position: fixed;
             bottom: 20px;
@@ -208,13 +208,20 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
             z-index: 1000;
             backdrop-filter: blur(5px);
-            transition: all 0.3s ease;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform: translateX(0);
+        }
+        
+        /* 隐藏状态 */
+        .audio-player.hidden {
+            transform: translateX(calc(100% + 20px));
+            opacity: 0.3;
         }
         
         .audio-player:hover {
             background: rgba(0, 0, 0, 0.8);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
+            transform: translateX(0) !important;
+            opacity: 1 !important;
         }
         
         .audio-player button {
@@ -253,6 +260,26 @@
             font-size: 0.8rem;
             opacity: 0.8;
             color: #fca311;
+        }
+        
+        /* 空格键提示 */
+        .spacebar-hint {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            color: #d4af37;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            z-index: 999;
+            animation: fadeInOut 2s ease-in-out infinite;
+            display: none;
+        }
+        
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
         }
         
         .countdown {
@@ -336,6 +363,12 @@
             .audio-subtitle {
                 font-size: 0.75rem;
             }
+            
+            .spacebar-hint {
+                bottom: 70px;
+                right: 15px;
+                font-size: 0.7rem;
+            }
         }
         
         @media (max-width: 480px) {
@@ -351,7 +384,6 @@
                 bottom: 10px;
                 right: 10px;
                 padding: 10px 12px;
-                flex-direction: row; /* 保持水平布局 */
             }
             
             .countdown-number {
@@ -362,13 +394,7 @@
             /* 超小屏幕调整 */
             @media (max-width: 360px) {
                 .audio-player {
-                    flex-direction: column;
-                    gap: 8px;
-                    padding: 10px;
-                }
-                
-                .audio-info {
-                    text-align: center;
+                    padding: 8px 10px;
                 }
             }
         }
@@ -493,6 +519,7 @@
     </script>
 </body>
 </html>
+
 
 
 

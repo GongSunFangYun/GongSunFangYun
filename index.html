@@ -389,7 +389,7 @@
             <div class="image-container">
                 <div class="image-wrapper">
                     <img src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEBoVdovtckuu8dTl7U7avTLhdSJ4TjsQACkzgAAn6U8VXyPa_6zzFILTYE.png" 
-                         alt="主图片">
+                         alt="Main-Image">
                 </div>
                 <p class="image-info">SeaWarCraft</p>
                 <p class="image-info">We felt the killing intent coming from the ocean...</p>
@@ -402,7 +402,7 @@
         </main>
         
         <footer>
-            <p>© 2024-2025 Blish - BWCE | Oh, it's driving me crazy, I don't want to be DMCA'd!</p>
+            <p>© 2024-2025 Bilishenxds - SWC | Oh, it's driving me crazy, I don't want to be DMCA'd!</p>
             <p>留言：祝愿各位国服煤炭可以等到模组发布！</p>
         </footer>
     </div>
@@ -482,7 +482,6 @@
                 playIcon.classList.add('fa-pause');
                 startHideTimer();
             }).catch(error => {
-                console.log('播放失败:', error);
             });
         }
         
@@ -518,13 +517,13 @@
         }
         
         function updateCountdown() {
-            const targetDate = new Date('2029-03-14');
+            const targetDate = new Date('2029-01-01');
             const now = new Date();
             
             const diff = targetDate - now;
             
             if (diff <= 0) {
-                document.getElementById('countdown').textContent = '已发布！';
+                document.getElementById('countdown').textContent = 'Released!';
                 return;
             }
             
@@ -534,7 +533,7 @@
             const seconds = Math.floor((diff % (1000 * 60)) / 1000);
             
             document.getElementById('countdown').textContent = 
-                `${days}天 ${hours}小时 ${minutes}分 ${seconds}秒`;
+                `${days}D ${hours}H ${minutes}M ${seconds}S`;
         }
         
         window.addEventListener('DOMContentLoaded', () => {
@@ -549,6 +548,7 @@
     </script>
 </body>
 </html>
+
 
 
 

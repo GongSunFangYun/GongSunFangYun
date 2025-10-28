@@ -1,1 +1,2 @@
-GongSunFangYun/GongSunFangYun is a special repository: its README.md will appear on your profile!
+支持我的项目：[爱发电链接
+](https://afdian.com/a/wdsjrzfx114514)

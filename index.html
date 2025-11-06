@@ -3,558 +3,519 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SeaWarCraft</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Solaria 内务工单生成器</title>
     <style>
+        :root {
+            --primary-color: #0078d4;
+            --primary-light: #e1f5fe;
+            --surface-color: #ffffff;
+            --text-primary: #323130;
+            --text-secondary: #605e5c;
+            --border-radius: 4px;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
         }
-        
+
         body {
-            font-family: 'Oxanium', 'Rajdhani', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0a0e17 0%, #1a283f 50%, #14213d 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            background-color: #f3f2f1;
+            color: var(--text-primary);
+            line-height: 1.5;
             padding: 20px;
-            color: #e5e5e5;
-            position: relative;
-            overflow-x: hidden;
         }
-        
-        /* 自定义背景图片与暗色遮罩 */
-        .custom-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            background-image: url('https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEBlRpovmPYRIiWrrwJuutIDgABQXIT8P8AAvopAAJ-lPFVPoMxr_1R9mY2BA.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-        
-        /* 暗色半透明遮罩 */
-        .custom-bg::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1;
-        }
-        
+
         .container {
-            max-width: 1200px;
-            width: 100%;
-            text-align: center;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
         }
-        
+
         header {
-            margin: 30px 0;
-            position: relative;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .logo {
-            width: 140px;
-            height: 140px;
-            background: radial-gradient(circle, #d4af37 0%, #aa8539 100%);
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
-            border: 3px solid #aa8539;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .logo::before {
-            content: '';
-            position: absolute;
-            width: 160px;
-            height: 160px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"><path d="M80,0 L90,40 L130,40 L100,60 L110,100 L80,80 L50,100 L60,60 L30,40 L70,40 Z" fill="%23ffffff33"/></svg>');
-            animation: rotate 30s linear infinite;
-        }
-        
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .logo i {
-            font-size: 60px;
-            color: #2c1810;
-            text-shadow: 0 0 5px rgba(212, 175, 55, 0.8);
-        }
-        
-        h1 {
-            color: #d4af37;
-            font-size: 3.5rem;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
-            letter-spacing: 2px;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-        
-        .subtitle {
-            color: #fca311;
-            font-size: 1.6rem;
+            text-align: center;
             margin-bottom: 30px;
-            position: relative;
-            display: inline-block;
-            font-weight: 600;
+            padding: 20px;
+            background-color: var(--surface-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.5s ease-out;
         }
-        
-        .subtitle::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, #d4af37, #fca311);
-            border-radius: 2px;
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
         }
-        
-        .image-container {
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            padding: 25px;
-            margin: 30px auto;
-            max-width: 90%;
-            display: inline-block;
-            transition: all 0.4s ease;
-            border: 2px solid #d4af37;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .image-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        
-        .image-container:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.3);
-        }
-        
-        .image-wrapper {
-            overflow: hidden;
-            border-radius: 10px;
-            line-height: 0;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
+
+        .card {
+            background-color: var(--surface-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 20px;
             transition: all 0.3s ease;
-            border: 1px solid #5a4b2a;
+            animation: slideUp 0.5s ease-out;
         }
-        
-        .image-wrapper:hover {
-            transform: scale(1.03);
+
+        .card:hover {
+            box-shadow: var(--shadow-hover);
         }
-        
-        img {
-            max-width: 100%;
-            height: auto;
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d2d0ce;
+            border-radius: var(--border-radius);
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
+        }
+
+        input:disabled {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #0063b1;
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .output-card {
+            background-color: var(--primary-light);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            white-space: pre-line;
+            font-family: 'Consolas', monospace;
+            position: relative;
+            min-height: 200px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #d2d0ce;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .tab.active {
+            border-bottom-color: var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
             display: block;
         }
-        
-        .image-info {
-            margin-top: 20px;
-            color: #fca311;
-            font-size: 1.2rem;
-            line-height: 1.6;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-        }
-        
-        /* 修改后的音频播放器 - 支持隐藏动画 */
-        .audio-player {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-            padding: 15px 20px;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            border: 1px solid #5a4b2a;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            backdrop-filter: blur(5px);
-            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            transform: translateX(0);
-        }
-        
-        /* 隐藏状态 */
-        .audio-player.hidden {
-            transform: translateX(calc(100% + 20px));
-            opacity: 0.3;
-        }
-        
-        .audio-player:hover {
-            background: rgba(0, 0, 0, 0.8);
-            transform: translateX(0) !important;
-            opacity: 1 !important;
-        }
-        
-        .audio-player button {
-            background: linear-gradient(135deg, #d4af37 0%, #aa8539 100%);
-            border: none;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            color: #2c1810;
-            cursor: pointer;
+
+        .duration-input, .reason-input {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+            gap: 10px;
         }
-        
-        .audio-player button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.7);
+
+        .duration-input input,
+        .duration-input select,
+        .reason-input input,
+        .reason-input select {
+            flex: 1;
         }
-        
-        .audio-info {
-            text-align: left;
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-        
-        .audio-title {
-            font-weight: 600;
-            margin-bottom: 3px;
-            color: #d4af37;
-            font-size: 0.95rem;
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
-        
-        .audio-subtitle {
-            font-size: 0.8rem;
-            opacity: 0.8;
-            color: #fca311;
-        }
-        
-        .countdown {
-            margin-top: 40px;
-            font-size: 1.3rem;
-            color: #fca311;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-        }
-        
-        .countdown-number {
-            display: inline-block;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 15px 25px;
-            border-radius: 10px;
-            margin: 15px 5px;
-            font-weight: bold;
-            min-width: 100px;
-            border: 1px solid #5a4b2a;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            color: #d4af37;
-            font-size: 1.4rem;
-        }
-        
-        footer {
-            margin-top: 60px;
-            color: rgba(212, 175, 55, 0.7);
-            font-size: 1rem;
-            padding: 20px;
-            border-top: 1px solid rgba(212, 175, 55, 0.3);
-            width: 100%;
-            max-width: 600px;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-        }
-        
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-            
-            .subtitle {
-                font-size: 1.3rem;
-            }
-            
-            .image-container {
-                padding: 20px;
-            }
-            
-            .logo {
-                width: 110px;
-                height: 110px;
-            }
-            
-            .logo i {
-                font-size: 45px;
-            }
-            
-            .countdown-number {
-                display: block;
-                margin: 10px auto;
-                max-width: 120px;
-            }
-            
-            /* 移动端调整音频播放器 */
-            .audio-player {
-                bottom: 15px;
-                right: 15px;
-                padding: 12px 15px;
-            }
-            
-            .audio-player button {
-                width: 40px;
-                height: 40px;
-                font-size: 14px;
-            }
-            
-            .audio-title {
-                font-size: 0.85rem;
-            }
-            
-            .audio-subtitle {
-                font-size: 0.75rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .subtitle {
-                font-size: 1.1rem;
-            }
-            
-            .audio-player {
-                bottom: 10px;
-                right: 10px;
-                padding: 10px 12px;
-            }
-            
-            .countdown-number {
-                font-size: 1.2rem;
-                padding: 12px 20px;
-            }
+
+        .success-message {
+            background-color: #dff6dd;
+            color: #107c10;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            margin-top: 10px;
+            text-align: center;
+            animation: fadeIn 0.3s ease-out;
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- 自定义背景图片与暗色遮罩 -->
-    <div class="custom-bg"></div>
-    
-    <!-- 海洋波浪 -->
-    <div class="ocean-waves"></div>
-    
     <div class="container">
         <header>
-            <div class="logo">
-                <i class="fas fa-anchor"></i>
-            </div>
-            <h1>SeaWarCraft</h1>
-            <p class="subtitle">“Inspired by the great game Blackwake, this mod aims to bring its thrilling naval warfare experience to Minecraft...</p>
-            <p class="subtitle">Expected to be launched in January 2029</p>
+            <h1>Solaria 内务工单生成器</h1>
+            <p>Made By GongSunFangYun</p>
         </header>
-        
-        <main>
-            <div class="image-container">
-                <div class="image-wrapper">
-                    <img src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEBoVdovtckuu8dTl7U7avTLhdSJ4TjsQACkzgAAn6U8VXyPa_6zzFILTYE.png" 
-                         alt="Main-Image">
-                </div>
-                <p class="image-info">SeaWarCraft</p>
-                <p class="image-info">We felt the killing intent coming from the ocean...</p>
-            </div>
-            
-            <div class="countdown">
-                <p>There is still time until the official release of the Mod</p>
-                <div class="countdown-number" id="countdown">Calculating...</div>
-            </div>
-        </main>
-        
-        <footer>
-            <p>© 2024-2025 Bilishenxds - SWC | Oh, it's driving me crazy, I don't want to be DMCA'd!</p>
-            <p>留言：祝愿各位国服煤炭可以等到模组发布！</p>
-        </footer>
-    </div>
-    
-    <!-- 固定在右下角的音频播放器 -->
-    <div class="audio-player" id="audioPlayer">
-        <button id="playPauseBtn">
-            <i class="fas fa-play"></i>
-        </button>
-        <div class="audio-info">
-            <div class="audio-title">Play Sound</div>
-            <div class="audio-subtitle">Blackwake - Main Theme</div>
+
+        <div class="tabs">
+            <div class="tab active" data-tab="punishment">处罚工单</div>
+            <div class="tab" data-tab="appointment">任命工单</div>
+            <div class="tab" data-tab="unban">解封工单</div>
+            <div class="tab" data-tab="destaff">取消任命工单</div>
         </div>
+
+        <div class="tab-content active" id="punishment">
+            <div class="card">
+                <h2>处罚工单生成</h2>
+                <div class="form-group">
+                    <label for="actionType">处罚类型</label>
+                    <select id="actionType">
+                        <option value="封禁">封禁</option>
+                        <option value="禁言">禁言</option>
+                        <option value="踢出">踢出</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="player">玩家名称</label>
+                    <input type="text" id="player" placeholder="输入玩家名称">
+                </div>
+                <div class="form-group">
+                    <label for="duration">时长</label>
+                    <div class="duration-input">
+                        <input type="text" id="duration" placeholder="例如: 3d (3天)" disabled>
+                        <select id="durationPreset">
+                            <option value="3h">3小时</option>
+                            <option value="1d">1天</option>
+                            <option value="3d">3天</option>
+                            <option value="7d">7天</option>
+                            <option value="14d">14天</option>
+                            <option value="30d">30天</option>
+                            <option value="1y">1年</option>
+                            <option value="永久">永久</option>
+                            <option value="custom">自定义</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reason">原因</label>
+                    <select id="reason">
+                        <option value="">请选择违规行为</option>
+                        <option value="逃逸">逃逸</option>
+                        <option value="刷屏">刷屏</option>
+                        <option value="不良发言">不良发言</option>
+                        <option value="不良披风">不良披风</option>
+                        <option value="违规皮肤使用">违规皮肤使用</option>
+                        <option value="安全作弊">安全作弊</option>
+                        <option value="存疑作弊">存疑作弊</option>
+                        <option value="暴力作弊">暴力作弊</option>
+                        <option value="劝架">劝架</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="moderator">操作者</label>
+                    <input type="text" id="moderator" placeholder="你的名称">
+                </div>
+                <button class="btn btn-block" id="generatePunishment">生成工单</button>
+            </div>
+        </div>
+
+        <div class="tab-content" id="appointment">
+            <div class="card">
+                <h2>任命工单生成</h2>
+                <div class="form-group">
+                    <label for="staffName">职员名称</label>
+                    <input type="text" id="staffName" placeholder="输入职员名称">
+                </div>
+                <div class="form-group">
+                    <label for="position">职位</label>
+                    <select id="position">
+                        <option value="Moderator">Moderator</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="adminName">操作者 (Admin/Dev/Owner)</label>
+                    <input type="text" id="adminName" placeholder="你的名称">
+                </div>
+                <button class="btn btn-block" id="generateAppointment">生成工单</button>
+            </div>
+        </div>
+
+        <div class="tab-content" id="unban">
+            <div class="card">
+                <h2>解封工单生成</h2>
+                <div class="form-group">
+                    <label for="unbanPlayer">玩家名称</label>
+                    <input type="text" id="unbanPlayer" placeholder="输入玩家名称">
+                </div>
+                <div class="form-group">
+                    <label for="unbanReason">原因</label>
+                    <div class="reason-input">
+                        <input type="text" id="unbanReasonInput" placeholder="输入原因" disabled>
+                        <select id="unbanReasonPreset">
+                            <option value="误判">误判</option>
+                            <option value="申诉通过">申诉通过</option>
+                            <option value="custom">自定义</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="unbanAdmin">操作者 (Admin/Dev/Owner)</label>
+                    <input type="text" id="unbanAdmin" placeholder="你的名称">
+                </div>
+                <button class="btn btn-block" id="generateUnban">生成工单</button>
+            </div>
+        </div>
+
+        <div class="tab-content" id="destaff">
+            <div class="card">
+                <h2>取消任命工单生成</h2>
+                <div class="form-group">
+                    <label for="destaffName">职员名称</label>
+                    <input type="text" id="destaffName" placeholder="输入职员名称">
+                </div>
+                <div class="form-group">
+                    <label for="destaffPosition">职位</label>
+                    <select id="destaffPosition">
+                        <option value="Moderator">Moderator</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="destaffReason">原因</label>
+                    <div class="reason-input">
+                        <input type="text" id="destaffReasonInput" placeholder="输入原因" disabled>
+                        <select id="destaffReasonPreset">
+                            <option value="处理误判">处理误判</option>
+                            <option value="离职">离职</option>
+                            <option value="custom">自定义</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="destaffAdmin">操作者 (Admin/Dev/Owner)</label>
+                    <input type="text" id="destaffAdmin" placeholder="你的名称">
+                </div>
+                <button class="btn btn-block" id="generateDestaff">生成工单</button>
+            </div>
+        </div>
+
+        <div class="card output-card hidden" id="outputCard">
+            <button class="btn copy-btn" id="copyBtn">复制工单</button>
+            <div id="outputContent"></div>
+        </div>
+
+        <div id="successMessage" class="success-message hidden">工单已复制到剪贴板！</div>
     </div>
-    
-    <audio id="bgAudio" loop>
-        <source src="mainmenu.mp3" type="audio/mpeg">
-    </audio>
 
     <script>
-        const audio = document.getElementById('bgAudio');
-        const playPauseBtn = document.getElementById('playPauseBtn');
-        const playIcon = playPauseBtn.querySelector('i');
-        const audioPlayer = document.getElementById('audioPlayer');
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        const durationInput = document.getElementById('duration');
+        const durationPreset = document.getElementById('durationPreset');
         
-        let hideTimer = null;
-        let userInteracted = false;
-        
-        function setupAudio() {
-            // 点击屏幕任意位置播放音乐
-            document.addEventListener('click', (e) => {
-                if (!userInteracted) {
-                    // 第一次点击：播放音乐
-                    playMusic();
-                    userInteracted = true;
-                } else if (audio.paused) {
-                    // 后续点击：如果暂停了就播放
-                    playMusic();
-                }
-            });
-            
-            // 空格键控制播放/暂停
-            document.addEventListener('keydown', (e) => {
-                if (e.code === 'Space') {
-                    e.preventDefault(); // 防止页面滚动
-                    
-                    if (!userInteracted) {
-                        // 第一次空格键：播放音乐
-                        playMusic();
-                        userInteracted = true;
-                    } else {
-                        // 后续空格键：切换播放/暂停
-                        togglePlayback();
-                    }
-                }
-            });
-            
-            playPauseBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (!userInteracted) {
-                    playMusic();
-                    userInteracted = true;
-                } else {
-                    togglePlayback();
-                }
-            });
-            
-            audioPlayer.addEventListener('click', (e) => {
-                e.stopPropagation();
-                resetHideTimer();
-            });
-        }
-        
-        function playMusic() {
-            audio.play().then(() => {
-                playIcon.classList.remove('fa-play');
-                playIcon.classList.add('fa-pause');
-                startHideTimer();
-            }).catch(error => {
-            });
-        }
-        
-        function togglePlayback() {
-            if (audio.paused) {
-                audio.play();
-                playIcon.classList.remove('fa-play');
-                playIcon.classList.add('fa-pause');
-                startHideTimer();
+        durationPreset.addEventListener('change', function() {
+            if (this.value === 'custom') {
+                durationInput.disabled = false;
+                durationInput.placeholder = '例如: 1y2m3d4h (1年2月3天4小时)';
+                durationInput.value = '';
             } else {
-                audio.pause();
-                playIcon.classList.remove('fa-pause');
-                playIcon.classList.add('fa-play');
-                // 暂停时显示播放器
-                audioPlayer.classList.remove('hidden');
-                clearTimeout(hideTimer);
+                durationInput.disabled = true;
+                durationInput.value = this.value;
             }
-        }
+        });
+        durationInput.disabled = true;
+        durationInput.value = durationPreset.value;
+        const unbanReasonInput = document.getElementById('unbanReasonInput');
+        const unbanReasonPreset = document.getElementById('unbanReasonPreset');
         
-        function startHideTimer() {
-            clearTimeout(hideTimer);
-            hideTimer = setTimeout(() => {
-                audioPlayer.classList.add('hidden');
-            }, 1000);
-        }
-        
-        function resetHideTimer() {
-            audioPlayer.classList.remove('hidden');
-            clearTimeout(hideTimer);
-            if (!audio.paused) {
-                startHideTimer();
+        unbanReasonPreset.addEventListener('change', function() {
+            if (this.value === 'custom') {
+                unbanReasonInput.disabled = false;
+                unbanReasonInput.placeholder = '输入解封原因';
+                unbanReasonInput.value = '';
+            } else {
+                unbanReasonInput.disabled = true;
+                unbanReasonInput.value = this.value;
             }
-        }
+        });
+
+        unbanReasonInput.disabled = true;
+        unbanReasonInput.value = unbanReasonPreset.value;
+
+        const destaffReasonInput = document.getElementById('destaffReasonInput');
+        const destaffReasonPreset = document.getElementById('destaffReasonPreset');
         
-        function updateCountdown() {
-            const targetDate = new Date('2029-01-01');
-            const now = new Date();
-            
-            const diff = targetDate - now;
-            
-            if (diff <= 0) {
-                document.getElementById('countdown').textContent = 'Released!';
+        destaffReasonPreset.addEventListener('change', function() {
+            if (this.value === 'custom') {
+                destaffReasonInput.disabled = false;
+                destaffReasonInput.placeholder = '输入取消任命原因';
+                destaffReasonInput.value = '';
+            } else {
+                destaffReasonInput.disabled = true;
+                destaffReasonInput.value = this.value;
+            }
+        });
+        destaffReasonInput.disabled = true;
+        destaffReasonInput.value = destaffReasonPreset.value;
+        document.getElementById('generatePunishment').addEventListener('click', function() {
+            const actionType = document.getElementById('actionType').value;
+            const player = document.getElementById('player').value;
+            const duration = document.getElementById('duration').value;
+            const reason = document.getElementById('reason').value;
+            const moderator = document.getElementById('moderator').value;
+            const date = new Date().toISOString().slice(0, 10).replace(/-/g, '.');
+
+            if (!player || !reason || !moderator) {
+                alert('请填写所有必填字段！');
                 return;
             }
-            
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-            
-            document.getElementById('countdown').textContent = 
-                `${days}D ${hours}H ${minutes}M ${seconds}S`;
+
+            let output = `# ${actionType}\n`;
+            output += `玩家：${player}\n`;
+            if (duration) output += `时长：${duration}\n`;
+            output += `原因：${reason}\n`;
+            output += `${moderator}\n`;
+            output += `${date}`;
+
+            showOutput(output);
+        });
+        document.getElementById('generateAppointment').addEventListener('click', function() {
+            const staffName = document.getElementById('staffName').value;
+            const position = document.getElementById('position').value;
+            const adminName = document.getElementById('adminName').value;
+            const date = new Date().toISOString().slice(0, 10).replace(/-/g, '.');
+
+            if (!staffName || !adminName) {
+                alert('请填写所有必填字段！');
+                return;
+            }
+
+            let output = `# 任命\n`;
+            output += `职员：${staffName}\n`;
+            output += `职位：${position}\n`;
+            output += `现在，${staffName} 已是 ${position}，相关权限已赋予。\n`;
+            output += `${adminName}\n`;
+            output += `${date}`;
+
+            showOutput(output);
+        });
+        document.getElementById('generateUnban').addEventListener('click', function() {
+            const player = document.getElementById('unbanPlayer').value;
+            const reason = unbanReasonInput.value;
+            const adminName = document.getElementById('unbanAdmin').value;
+            const date = new Date().toISOString().slice(0, 10).replace(/-/g, '.');
+
+            if (!player || !reason || !adminName) {
+                alert('请填写所有必填字段！');
+                return;
+            }
+
+            let output = `# 解封\n`;
+            output += `玩家：${player}\n`;
+            output += `原因：${reason}\n`;
+            output += `${adminName}\n`;
+            output += `${date}`;
+
+            showOutput(output);
+        });
+        document.getElementById('generateDestaff').addEventListener('click', function() {
+            const staffName = document.getElementById('destaffName').value;
+            const position = document.getElementById('destaffPosition').value;
+            const reason = destaffReasonInput.value;
+            const adminName = document.getElementById('destaffAdmin').value;
+            const date = new Date().toISOString().slice(0, 10).replace(/-/g, '.');
+
+            if (!staffName || !reason || !adminName) {
+                alert('请填写所有必填字段！');
+                return;
+            }
+
+            let output = `# 取消任命\n`;
+            output += `职员：${staffName}\n`;
+            output += `职位：${position}\n`;
+            output += `原因：${reason}\n`;
+            output += `现在，${staffName} 已不再是 ${position}，相关权限已撤下。\n`;
+            output += `${adminName}\n`;
+            output += `${date}`;
+
+            showOutput(output);
+        });
+        function showOutput(content) {
+            document.getElementById('outputContent').textContent = content;
+            document.getElementById('outputCard').classList.remove('hidden');
+            document.getElementById('successMessage').classList.add('hidden');
         }
-        
-        window.addEventListener('DOMContentLoaded', () => {
-            setupAudio();
-            updateCountdown();
-            
-            setInterval(updateCountdown, 1000);
-            
-            audioPlayer.addEventListener('mouseenter', resetHideTimer);
-            audioPlayer.addEventListener('touchstart', resetHideTimer);
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            const outputContent = document.getElementById('outputContent').textContent;
+            navigator.clipboard.writeText(outputContent).then(() => {
+                const successMessage = document.getElementById('successMessage');
+                successMessage.classList.remove('hidden');
+                setTimeout(() => {
+                    successMessage.classList.add('hidden');
+                }, 3000);
+            });
         });
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-

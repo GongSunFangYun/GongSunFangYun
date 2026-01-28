@@ -3,185 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solaria 内务工单生成器</title>
+    <title>Solaria 内务系统</title>
     <style>
         :root {
-            --primary-color: #0078d4;
-            --primary-light: #e1f5fe;
-            --surface-color: #ffffff;
-            --text-primary: #323130;
-            --text-secondary: #605e5c;
-            --border-radius: 4px;
-            --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --primary: #0078d4;
+            --primary-hover: #005a9e;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --text-main: #201f1e;
+            --text-sub: #605e5c;
+            --radius: 12px;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Static', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         body {
-            background-color: #f3f2f1;
-            color: var(--text-primary);
-            line-height: 1.5;
-            padding: 20px;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            color: var(--text-main);
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
         }
 
         .container {
-            max-width: 800px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 700px;
+            animation: slideUp 0.6s ease;
         }
 
+        /* Header Styling */
         header {
             text-align: center;
             margin-bottom: 30px;
-            padding: 20px;
-            background-color: var(--surface-color);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            animation: fadeIn 0.5s ease-out;
         }
 
-        h1 {
-            color: var(--primary-color);
-            margin-bottom: 10px;
+        header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, #0078d4, #00bcf2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .card {
-            background-color: var(--surface-color);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            padding: 20px;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
-            animation: slideUp 0.5s ease-out;
+        header p {
+            color: var(--text-sub);
+            font-size: 0.9rem;
+            margin-top: 5px;
+            opacity: 0.8;
         }
 
-        .card:hover {
-            box-shadow: var(--shadow-hover);
+        /* Glassmorphism Card */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: 30px;
+            overflow: hidden;
         }
 
-        .form-group {
-            margin-bottom: 15px;
+        /* Modern Tabs */
+        .tabs {
+            display: flex;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 5px;
+            border-radius: calc(var(--radius) - 4px);
+            margin-bottom: 25px;
+            gap: 5px;
         }
+
+        .tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: calc(var(--radius) - 8px);
+            transition: var(--transition);
+            color: var(--text-sub);
+        }
+
+        .tab:hover { color: var(--primary); }
+
+        .tab.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Form Controls */
+        .form-group { margin-bottom: 20px; }
 
         label {
             display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-            color: var(--text-primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-sub);
+            padding-left: 2px;
         }
 
         input, select, textarea {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #d2d0ce;
-            border-radius: var(--border-radius);
+            padding: 12px 16px;
+            border: 1.5px solid transparent;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
             font-size: 14px;
-            transition: all 0.2s ease;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+            transition: var(--transition);
         }
 
-        input:focus, select:focus, textarea:focus {
+        input:focus, select:focus {
             outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(0, 120, 212, 0.1);
         }
 
-        input:disabled {
-            background-color: #f8f9fa;
-            color: #6c757d;
-            cursor: not-allowed;
-        }
+        .input-row { display: flex; gap: 12px; }
 
+        /* Buttons */
         .btn {
-            display: inline-block;
-            background-color: var(--primary-color);
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: var(--border-radius);
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            width: 100%;
             cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            text-align: center;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(0, 120, 212, 0.2);
         }
 
         .btn:hover {
-            background-color: #0063b1;
+            background: var(--primary-hover);
             transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 120, 212, 0.3);
         }
 
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        .btn-block {
-            display: block;
-            width: 100%;
-        }
-
-        .output-card {
-            background-color: var(--primary-light);
-            padding: 20px;
-            border-radius: var(--border-radius);
-            white-space: pre-line;
-            font-family: 'Consolas', monospace;
+        /* Output Area */
+        .output-wrapper {
+            margin-top: 30px;
+            background: #2d2d2d;
+            border-radius: var(--radius);
             position: relative;
-            min-height: 200px;
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        .copy-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-        }
-
-        .hidden {
             display: none;
+            animation: fadeIn 0.4s ease;
         }
 
-        .tabs {
+        .output-header {
             display: flex;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #d2d0ce;
-        }
-
-        .tab {
+            justify-content: space-between;
+            align-items: center;
             padding: 10px 20px;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s ease;
+            background: rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        .tab.active {
-            border-bottom-color: var(--primary-color);
-            color: var(--primary-color);
-            font-weight: 500;
+        .output-header span { color: #aaa; font-size: 12px; font-family: monospace; }
+
+        pre {
+            color: #e0e0e0;
+            padding: 20px;
+            font-family: 'Cascadia Code', 'Consolas', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            white-space: pre-wrap;
         }
 
-        .tab-content {
+        .copy-success {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #107c10;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 14px;
             display: none;
+            z-index: 100;
+            box-shadow: var(--shadow-lg);
         }
 
-        .tab-content.active {
-            display: block;
-        }
-
-        .duration-input, .reason-input {
-            display: flex;
-            gap: 10px;
-        }
-
-        .duration-input input,
-        .duration-input select,
-        .reason-input input,
-        .reason-input select {
-            flex: 1;
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes fadeIn {
@@ -189,334 +209,162 @@
             to { opacity: 1; }
         }
 
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .success-message {
-            background-color: #dff6dd;
-            color: #107c10;
-            padding: 10px;
-            border-radius: var(--border-radius);
-            margin-top: 10px;
-            text-align: center;
-            animation: fadeIn 0.3s ease-out;
-        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
     </style>
 </head>
 <body>
+
     <div class="container">
         <header>
-            <h1>Solaria 内务工单生成器</h1>
-            <p>Made By GongSunFangYun</p>
+            <h1>Solaria Inner-Affairs</h1>
+            <p>高效生成标准化内务工单</p>
         </header>
 
-        <div class="tabs">
-            <div class="tab active" data-tab="punishment">处罚工单</div>
-            <div class="tab" data-tab="appointment">任命工单</div>
-            <div class="tab" data-tab="unban">解封工单</div>
-            <div class="tab" data-tab="destaff">取消任命工单</div>
-        </div>
+        <div class="glass-card">
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('punishment')">处罚</div>
+                <div class="tab" onclick="switchTab('appointment')">任命</div>
+                <div class="tab" onclick="switchTab('unban')">解封</div>
+                <div class="tab" onclick="switchTab('destaff')">撤职</div>
+            </div>
 
-        <div class="tab-content active" id="punishment">
-            <div class="card">
-                <h2>处罚工单生成</h2>
+            <div id="punishment" class="tab-content active">
                 <div class="form-group">
-                    <label for="actionType">处罚类型</label>
-                    <select id="actionType">
-                        <option value="封禁">封禁</option>
-                        <option value="禁言">禁言</option>
-                    </select>
+                    <label>玩家名称</label>
+                    <input type="text" id="p_player" placeholder="输入玩家游戏 ID">
                 </div>
-                <div class="form-group">
-                    <label for="player">玩家名称</label>
-                    <input type="text" id="player" placeholder="输入玩家名称">
-                </div>
-                <div class="form-group">
-                    <label for="duration">时长</label>
-                    <div class="duration-input">
-                        <input type="text" id="duration" placeholder="例如: 3d (3天)" disabled>
-                        <select id="durationPreset">
-                            <option value="3h">3小时</option>
-                            <option value="1d">1天</option>
-                            <option value="3d">3天</option>
-                            <option value="7d">7天</option>
-                            <option value="14d">14天</option>
-                            <option value="30d">30天</option>
-                            <option value="1y">1年</option>
-                            <option value="永久">永久</option>
-                            <option value="custom">自定义</option>
+                <div class="input-row">
+                    <div class="form-group" style="flex: 2;">
+                        <label>处罚类型</label>
+                        <select id="p_type">
+                            <option value="封禁">封禁 (Ban)</option>
+                            <option value="禁言">禁言 (Mute)</option>
                         </select>
+                    </div>
+                    <div class="form-group" style="flex: 3;">
+                        <label>时长</label>
+                        <div class="input-row">
+                            <select id="p_duration_preset" onchange="toggleCustom('p_duration')">
+                                <option value="3h">3 小时</option>
+                                <option value="1d">1 天</option>
+                                <option value="7d">7 天</option>
+                                <option value="30d">30 天</option>
+                                <option value="永久">永久</option>
+                                <option value="custom">自定义...</option>
+                            </select>
+                            <input type="text" id="p_duration_custom" class="hidden-input" placeholder="如: 14d" style="display:none">
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="reason">原因</label>
-                    <select id="reason">
-                        <option value="">请选择违规行为</option>
-                        <option value="逃逸">逃逸</option>
-                        <option value="刷屏">刷屏</option>
-                        <option value="不良发言">不良发言</option>
-                        <option value="不良披风">不良披风</option>
-                        <option value="违规皮肤使用">违规皮肤使用</option>
-                        <option value="安全作弊">安全作弊</option>
-                        <option value="存疑作弊">存疑作弊</option>
-                        <option value="暴力作弊">暴力作弊</option>
-                        <option value="劝架">劝架</option>
+                    <label>违规原因</label>
+                    <select id="p_reason">
+                        <option value="逃逸">逃逸 / Combat Log</option>
+                        <option value="不良发言">不良发言 / Toxicity</option>
+                        <option value="作弊使用">作弊使用 / Hacking</option>
+                        <option value="宣传违规">宣传违规 / Advertising</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="moderator">操作者</label>
-                    <input type="text" id="moderator" placeholder="你的名称">
+                    <label>操作者</label>
+                    <input type="text" id="p_mod" placeholder="填写你的名称">
                 </div>
-                <button class="btn btn-block" id="generatePunishment">生成工单</button>
+                <button class="btn" onclick="generate('punishment')">生成处罚工单</button>
             </div>
-        </div>
 
-        <div class="tab-content" id="appointment">
-            <div class="card">
-                <h2>任命工单生成</h2>
+            <div id="appointment" class="tab-content">
                 <div class="form-group">
-                    <label for="staffName">职员名称</label>
-                    <input type="text" id="staffName" placeholder="输入职员名称">
+                    <label>职员名称</label>
+                    <input type="text" id="a_staff" placeholder="输入职员 ID">
                 </div>
                 <div class="form-group">
-                    <label for="position">职位</label>
-                    <select id="position">
+                    <label>职位</label>
+                    <select id="a_pos">
                         <option value="Moderator">Moderator</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Builder">Builder</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="adminName">操作者 (Admin/Dev/Owner)</label>
-                    <input type="text" id="adminName" placeholder="你的名称">
+                    <label>操作者</label>
+                    <input type="text" id="a_mod" placeholder="你的名称">
                 </div>
-                <button class="btn btn-block" id="generateAppointment">生成工单</button>
+                <button class="btn" onclick="generate('appointment')">生成任命工单</button>
+            </div>
+            
+            <div class="output-wrapper" id="outputWrapper">
+                <div class="output-header">
+                    <span>GENERATE_RESULT.TXT</span>
+                    <button onclick="copyToClipboard()" style="background:none; border:none; color:var(--primary); cursor:pointer; font-weight:bold;">复制文本</button>
+                </div>
+                <pre id="outputContent"></pre>
             </div>
         </div>
-
-        <div class="tab-content" id="unban">
-            <div class="card">
-                <h2>解封工单生成</h2>
-                <div class="form-group">
-                    <label for="unbanPlayer">玩家名称</label>
-                    <input type="text" id="unbanPlayer" placeholder="输入玩家名称">
-                </div>
-                <div class="form-group">
-                    <label for="unbanReason">原因</label>
-                    <div class="reason-input">
-                        <input type="text" id="unbanReasonInput" placeholder="输入原因" disabled>
-                        <select id="unbanReasonPreset">
-                            <option value="误判">误判</option>
-                            <option value="申诉通过">申诉通过</option>
-                            <option value="custom">自定义</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="unbanAdmin">操作者 (Admin/Dev/Owner)</label>
-                    <input type="text" id="unbanAdmin" placeholder="你的名称">
-                </div>
-                <button class="btn btn-block" id="generateUnban">生成工单</button>
-            </div>
-        </div>
-
-        <div class="tab-content" id="destaff">
-            <div class="card">
-                <h2>取消任命工单生成</h2>
-                <div class="form-group">
-                    <label for="destaffName">职员名称</label>
-                    <input type="text" id="destaffName" placeholder="输入职员名称">
-                </div>
-                <div class="form-group">
-                    <label for="destaffPosition">职位</label>
-                    <select id="destaffPosition">
-                        <option value="Moderator">Moderator</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="destaffReason">原因</label>
-                    <div class="reason-input">
-                        <input type="text" id="destaffReasonInput" placeholder="输入原因" disabled>
-                        <select id="destaffReasonPreset">
-                            <option value="处理误判">处理误判</option>
-                            <option value="离职">离职</option>
-                            <option value="custom">自定义</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="destaffAdmin">操作者 (Admin/Dev/Owner)</label>
-                    <input type="text" id="destaffAdmin" placeholder="你的名称">
-                </div>
-                <button class="btn btn-block" id="generateDestaff">生成工单</button>
-            </div>
-        </div>
-
-        <div class="card output-card hidden" id="outputCard">
-            <button class="btn copy-btn" id="copyBtn">复制工单</button>
-            <div id="outputContent"></div>
-        </div>
-
-        <div id="successMessage" class="success-message hidden">工单已复制到剪贴板！</div>
     </div>
 
+    <div class="copy-success" id="toast">已成功复制到剪贴板！</div>
+
     <script>
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                tab.classList.add('active');
-                const tabId = tab.getAttribute('data-tab');
-                document.getElementById(tabId).classList.add('active');
-            });
-        });
-        const durationInput = document.getElementById('duration');
-        const durationPreset = document.getElementById('durationPreset');
-        
-        durationPreset.addEventListener('change', function() {
-            if (this.value === 'custom') {
-                durationInput.disabled = false;
-                durationInput.placeholder = '例如: 1y2m3d4h (1年2月3天4小时)';
-                durationInput.value = '';
-            } else {
-                durationInput.disabled = true;
-                durationInput.value = this.value;
-            }
-        });
-        durationInput.disabled = true;
-        durationInput.value = durationPreset.value;
-        const unbanReasonInput = document.getElementById('unbanReasonInput');
-        const unbanReasonPreset = document.getElementById('unbanReasonPreset');
-        
-        unbanReasonPreset.addEventListener('change', function() {
-            if (this.value === 'custom') {
-                unbanReasonInput.disabled = false;
-                unbanReasonInput.placeholder = '输入解封原因';
-                unbanReasonInput.value = '';
-            } else {
-                unbanReasonInput.disabled = true;
-                unbanReasonInput.value = this.value;
-            }
-        });
-
-        unbanReasonInput.disabled = true;
-        unbanReasonInput.value = unbanReasonPreset.value;
-
-        const destaffReasonInput = document.getElementById('destaffReasonInput');
-        const destaffReasonPreset = document.getElementById('destaffReasonPreset');
-        
-        destaffReasonPreset.addEventListener('change', function() {
-            if (this.value === 'custom') {
-                destaffReasonInput.disabled = false;
-                destaffReasonInput.placeholder = '输入取消任命原因';
-                destaffReasonInput.value = '';
-            } else {
-                destaffReasonInput.disabled = true;
-                destaffReasonInput.value = this.value;
-            }
-        });
-        destaffReasonInput.disabled = true;
-        destaffReasonInput.value = destaffReasonPreset.value;
-        document.getElementById('generatePunishment').addEventListener('click', function() {
-            const actionType = document.getElementById('actionType').value;
-            const player = document.getElementById('player').value;
-            const duration = document.getElementById('duration').value;
-            const reason = document.getElementById('reason').value;
-            const moderator = document.getElementById('moderator').value;
-            const date = new Date().toISOString().slice(0, 10).replace(/-/g, '.');
-
-            if (!player || !reason || !moderator) {
-                alert('请填写所有必填字段！');
-                return;
-            }
-
-            let output = `# ${actionType}\n`;
-            output += `玩家：${player}\n`;
-            if (duration) output += `时长：${duration}\n`;
-            output += `原因：${reason}\n`;
-            output += `${moderator}\n`;
-            output += `${date}`;
-
-            showOutput(output);
-        });
-        document.getElementById('generateAppointment').addEventListener('click', function() {
-            const staffName = document.getElementById('staffName').value;
-            const position = document.getElementById('position').value;
-            const adminName = document.getElementById('adminName').value;
-            const date = new Date().toISOString().slice(0, 10).replace(/-/g, '.');
-
-            if (!staffName || !adminName) {
-                alert('请填写所有必填字段！');
-                return;
-            }
-
-            let output = `# 任命\n`;
-            output += `职员：${staffName}\n`;
-            output += `职位：${position}\n`;
-            output += `现在，${staffName} 已是 ${position}，相关权限已赋予。\n`;
-            output += `${adminName}\n`;
-            output += `${date}`;
-
-            showOutput(output);
-        });
-        document.getElementById('generateUnban').addEventListener('click', function() {
-            const player = document.getElementById('unbanPlayer').value;
-            const reason = unbanReasonInput.value;
-            const adminName = document.getElementById('unbanAdmin').value;
-            const date = new Date().toISOString().slice(0, 10).replace(/-/g, '.');
-
-            if (!player || !reason || !adminName) {
-                alert('请填写所有必填字段！');
-                return;
-            }
-
-            let output = `# 解封\n`;
-            output += `玩家：${player}\n`;
-            output += `原因：${reason}\n`;
-            output += `${adminName}\n`;
-            output += `${date}`;
-
-            showOutput(output);
-        });
-        document.getElementById('generateDestaff').addEventListener('click', function() {
-            const staffName = document.getElementById('destaffName').value;
-            const position = document.getElementById('destaffPosition').value;
-            const reason = destaffReasonInput.value;
-            const adminName = document.getElementById('destaffAdmin').value;
-            const date = new Date().toISOString().slice(0, 10).replace(/-/g, '.');
-
-            if (!staffName || !reason || !adminName) {
-                alert('请填写所有必填字段！');
-                return;
-            }
-
-            let output = `# 取消任命\n`;
-            output += `职员：${staffName}\n`;
-            output += `职位：${position}\n`;
-            output += `原因：${reason}\n`;
-            output += `现在，${staffName} 已不再是 ${position}，相关权限已撤下。\n`;
-            output += `${adminName}\n`;
-            output += `${date}`;
-
-            showOutput(output);
-        });
-        function showOutput(content) {
-            document.getElementById('outputContent').textContent = content;
-            document.getElementById('outputCard').classList.remove('hidden');
-            document.getElementById('successMessage').classList.add('hidden');
+        // 现代化标签切换
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+            document.getElementById('outputWrapper').style.display = 'none';
         }
-        document.getElementById('copyBtn').addEventListener('click', function() {
-            const outputContent = document.getElementById('outputContent').textContent;
-            navigator.clipboard.writeText(outputContent).then(() => {
-                const successMessage = document.getElementById('successMessage');
-                successMessage.classList.remove('hidden');
-                setTimeout(() => {
-                    successMessage.classList.add('hidden');
-                }, 3000);
+
+        // 自定义时长切换逻辑
+        function toggleCustom(prefix) {
+            const select = document.getElementById('p_duration_preset');
+            const custom = document.getElementById('p_duration_custom');
+            custom.style.display = select.value === 'custom' ? 'block' : 'none';
+        }
+
+        // 核心生成逻辑
+        function generate(type) {
+            const date = new Date().toISOString().slice(0, 10).replace(/-/g, '.');
+            let result = "";
+
+            if (type === 'punishment') {
+                const player = document.getElementById('p_player').value;
+                const pType = document.getElementById('p_type').value;
+                const duration = document.getElementById('p_duration_preset').value === 'custom' ? 
+                                 document.getElementById('p_duration_custom').value : 
+                                 document.getElementById('p_duration_preset').value;
+                const reason = document.getElementById('p_reason').value;
+                const mod = document.getElementById('p_mod').value;
+
+                if(!player || !mod) return alert("请填写完整信息");
+
+                result = `# ${pType}\n玩家：${player}\n时长：${duration}\n原因：${reason}\n\n${mod}\n${date}`;
+            } else if (type === 'appointment') {
+                const staff = document.getElementById('a_staff').value;
+                const pos = document.getElementById('a_pos').value;
+                const mod = document.getElementById('a_mod').value;
+                
+                result = `# 任命\n职员：${staff}\n职位：${pos}\n\n现在，${staff} 已是 ${pos}，相关权限已赋予。\n\n${mod}\n${date}`;
+            }
+
+            const wrapper = document.getElementById('outputWrapper');
+            const content = document.getElementById('outputContent');
+            content.textContent = result;
+            wrapper.style.display = 'block';
+            
+            // 自动滚动到预览区
+            wrapper.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function copyToClipboard() {
+            const text = document.getElementById('outputContent').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById('toast');
+                toast.style.display = 'block';
+                setTimeout(() => toast.style.display = 'none', 2000);
             });
-        });
+        }
     </script>
 </body>
 </html>
-
-

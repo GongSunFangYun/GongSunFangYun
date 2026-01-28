@@ -13,15 +13,11 @@
             --text-main: #201f1e;
             --text-sub: #605e5c;
             --radius: 12px;
-            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
             --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        * {
-            margin: 0; padding: 0; box-sizing: border-box;
-            font-family: 'Static', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
 
         body {
             background: var(--bg-gradient);
@@ -32,35 +28,16 @@
             justify-content: center;
         }
 
-        .container {
-            width: 100%;
-            max-width: 700px;
-            animation: slideUp 0.6s ease;
-        }
+        .container { width: 100%; max-width: 700px; animation: slideUp 0.6s ease; }
 
-        /* Header Styling */
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
+        header { text-align: center; margin-bottom: 30px; }
+        header h1 { 
+            font-size: 2rem; 
             background: linear-gradient(to right, #0078d4, #00bcf2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        header p {
-            color: var(--text-sub);
-            font-size: 0.9rem;
-            margin-top: 5px;
-            opacity: 0.8;
-        }
-
-        /* Glassmorphism Card */
         .glass-card {
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
@@ -69,15 +46,14 @@
             border-radius: var(--radius);
             box-shadow: var(--shadow-lg);
             padding: 30px;
-            overflow: hidden;
         }
 
-        /* Modern Tabs */
+        /* Tabs Control */
         .tabs {
             display: flex;
             background: rgba(0, 0, 0, 0.05);
             padding: 5px;
-            border-radius: calc(var(--radius) - 4px);
+            border-radius: 10px;
             margin-bottom: 25px;
             gap: 5px;
         }
@@ -89,52 +65,35 @@
             font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
-            border-radius: calc(var(--radius) - 8px);
+            border-radius: 8px;
             transition: var(--transition);
             color: var(--text-sub);
         }
 
-        .tab:hover { color: var(--primary); }
+        .tab.active { background: white; color: var(--primary); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
-        .tab.active {
-            background: white;
-            color: var(--primary);
-            box-shadow: var(--shadow-sm);
-        }
+        /* Form Layout */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease; }
 
-        /* Form Controls */
-        .form-group { margin-bottom: 20px; }
-
-        label {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--text-sub);
-            padding-left: 2px;
-        }
-
-        input, select, textarea {
+        .form-group { margin-bottom: 18px; }
+        label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text-sub); }
+        
+        input, select {
             width: 100%;
-            padding: 12px 16px;
+            padding: 12px;
             border: 1.5px solid transparent;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 8px;
-            font-size: 14px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
             transition: var(--transition);
         }
 
         input:focus, select:focus {
             outline: none;
             border-color: var(--primary);
-            background: white;
             box-shadow: 0 0 0 4px rgba(0, 120, 212, 0.1);
         }
 
-        .input-row { display: flex; gap: 12px; }
-
-        /* Buttons */
         .btn {
             background: var(--primary);
             color: white;
@@ -145,80 +104,47 @@
             width: 100%;
             cursor: pointer;
             transition: var(--transition);
-            box-shadow: 0 4px 12px rgba(0, 120, 212, 0.2);
         }
 
-        .btn:hover {
-            background: var(--primary-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 120, 212, 0.3);
-        }
+        .btn:hover { background: var(--primary-hover); transform: translateY(-2px); }
 
-        /* Output Area */
+        /* Output View */
         .output-wrapper {
             margin-top: 30px;
             background: #2d2d2d;
             border-radius: var(--radius);
-            position: relative;
             display: none;
-            animation: fadeIn 0.4s ease;
+            overflow: hidden;
         }
 
         .output-header {
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.05);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 20px;
-            background: rgba(255,255,255,0.05);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 12px;
         }
 
-        .output-header span { color: #aaa; font-size: 12px; font-family: monospace; }
+        pre { color: #e0e0e0; padding: 20px; font-family: 'Consolas', monospace; white-space: pre-wrap; font-size: 14px; }
 
-        pre {
-            color: #e0e0e0;
-            padding: 20px;
-            font-family: 'Cascadia Code', 'Consolas', monospace;
-            font-size: 14px;
-            line-height: 1.6;
-            white-space: pre-wrap;
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .toast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: #107c10; color: white; padding: 12px 25px; border-radius: 50px;
+            display: none; z-index: 100;
         }
-
-        .copy-success {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #107c10;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 50px;
-            font-size: 14px;
-            display: none;
-            z-index: 100;
-            box-shadow: var(--shadow-lg);
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
     </style>
 </head>
 <body>
 
     <div class="container">
         <header>
-            <h1>Solaria Inner-Affairs</h1>
-            <p>高效生成标准化内务工单</p>
+            <h1>Solaria 内务系统</h1>
+            <p>Made By GongSunFangYun</p>
         </header>
 
         <div class="glass-card">
@@ -230,140 +156,85 @@
             </div>
 
             <div id="punishment" class="tab-content active">
-                <div class="form-group">
-                    <label>玩家名称</label>
-                    <input type="text" id="p_player" placeholder="输入玩家游戏 ID">
+                <div class="form-group"><label>玩家 ID</label><input type="text" id="p_id"></div>
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex:1;"><label>类型</label><select id="p_type"><option>封禁</option><option>禁言</option></select></div>
+                    <div class="form-group" style="flex:1;"><label>时长</label><input type="text" id="p_time" placeholder="如: 3d / 永久"></div>
                 </div>
-                <div class="input-row">
-                    <div class="form-group" style="flex: 2;">
-                        <label>处罚类型</label>
-                        <select id="p_type">
-                            <option value="封禁">封禁 (Ban)</option>
-                            <option value="禁言">禁言 (Mute)</option>
-                        </select>
-                    </div>
-                    <div class="form-group" style="flex: 3;">
-                        <label>时长</label>
-                        <div class="input-row">
-                            <select id="p_duration_preset" onchange="toggleCustom('p_duration')">
-                                <option value="3h">3 小时</option>
-                                <option value="1d">1 天</option>
-                                <option value="7d">7 天</option>
-                                <option value="30d">30 天</option>
-                                <option value="永久">永久</option>
-                                <option value="custom">自定义...</option>
-                            </select>
-                            <input type="text" id="p_duration_custom" class="hidden-input" placeholder="如: 14d" style="display:none">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>违规原因</label>
-                    <select id="p_reason">
-                        <option value="逃逸">逃逸 / Combat Log</option>
-                        <option value="不良发言">不良发言 / Toxicity</option>
-                        <option value="作弊使用">作弊使用 / Hacking</option>
-                        <option value="宣传违规">宣传违规 / Advertising</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>操作者</label>
-                    <input type="text" id="p_mod" placeholder="填写你的名称">
-                </div>
-                <button class="btn" onclick="generate('punishment')">生成处罚工单</button>
+                <div class="form-group"><label>原因</label><input type="text" id="p_reason"></div>
+                <div class="form-group"><label>操作者</label><input type="text" id="p_mod"></div>
+                <button class="btn" onclick="build('p')">生成处罚工单</button>
             </div>
 
             <div id="appointment" class="tab-content">
-                <div class="form-group">
-                    <label>职员名称</label>
-                    <input type="text" id="a_staff" placeholder="输入职员 ID">
-                </div>
-                <div class="form-group">
-                    <label>职位</label>
-                    <select id="a_pos">
-                        <option value="Moderator">Moderator</option>
-                        <option value="Admin">Admin</option>
-                        <option value="Builder">Builder</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>操作者</label>
-                    <input type="text" id="a_mod" placeholder="你的名称">
-                </div>
-                <button class="btn" onclick="generate('appointment')">生成任命工单</button>
+                <div class="form-group"><label>职员 ID</label><input type="text" id="a_id"></div>
+                <div class="form-group"><label>授予职位</label><select id="a_pos"><option>Moderator</option><option>Admin</option><option>Developer</option></select></div>
+                <div class="form-group"><label>操作者</label><input type="text" id="a_mod"></div>
+                <button class="btn" onclick="build('a')">生成任命工单</button>
             </div>
-            
-            <div class="output-wrapper" id="outputWrapper">
-                <div class="output-header">
-                    <span>GENERATE_RESULT.TXT</span>
-                    <button onclick="copyToClipboard()" style="background:none; border:none; color:var(--primary); cursor:pointer; font-weight:bold;">复制文本</button>
-                </div>
-                <pre id="outputContent"></pre>
+
+            <div id="unban" class="tab-content">
+                <div class="form-group"><label>玩家 ID</label><input type="text" id="u_id"></div>
+                <div class="form-group"><label>解封理由</label><select id="u_reason"><option>申诉通过</option><option>证据不足</option><option>误判撤回</option></select></div>
+                <div class="form-group"><label>操作者</label><input type="text" id="u_mod"></div>
+                <button class="btn" onclick="build('u')">生成解封工单</button>
+            </div>
+
+            <div id="destaff" class="tab-content">
+                <div class="form-group"><label>职员 ID</label><input type="text" id="d_id"></div>
+                <div class="form-group"><label>原职位</label><input type="text" id="d_pos" value="Moderator"></div>
+                <div class="form-group"><label>撤职原因</label><input type="text" id="d_reason" placeholder="如: 长期离线 / 严重违规"></div>
+                <div class="form-group"><label>操作者</label><input type="text" id="d_mod"></div>
+                <button class="btn" onclick="build('d')">生成撤职工单</button>
+            </div>
+
+            <div class="output-wrapper" id="outBox">
+                <div class="output-header"><span>RESULT_PREVIEW</span><span onclick="copy()" style="cursor:pointer; color:var(--primary)">点击复制</span></div>
+                <pre id="outContent"></pre>
             </div>
         </div>
     </div>
 
-    <div class="copy-success" id="toast">已成功复制到剪贴板！</div>
+    <div class="toast" id="toast">工单已复制到剪贴板</div>
 
     <script>
-        // 现代化标签切换
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            
-            document.getElementById(tabId).classList.add('active');
+        function switchTab(id) {
+            document.querySelectorAll('.tab, .tab-content').forEach(el => el.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
             event.currentTarget.classList.add('active');
-            document.getElementById('outputWrapper').style.display = 'none';
+            document.getElementById('outBox').style.display = 'none';
         }
 
-        // 自定义时长切换逻辑
-        function toggleCustom(prefix) {
-            const select = document.getElementById('p_duration_preset');
-            const custom = document.getElementById('p_duration_custom');
-            custom.style.display = select.value === 'custom' ? 'block' : 'none';
-        }
-
-        // 核心生成逻辑
-        function generate(type) {
+        function build(type) {
             const date = new Date().toISOString().slice(0, 10).replace(/-/g, '.');
-            let result = "";
+            let t = "";
 
-            if (type === 'punishment') {
-                const player = document.getElementById('p_player').value;
-                const pType = document.getElementById('p_type').value;
-                const duration = document.getElementById('p_duration_preset').value === 'custom' ? 
-                                 document.getElementById('p_duration_custom').value : 
-                                 document.getElementById('p_duration_preset').value;
-                const reason = document.getElementById('p_reason').value;
-                const mod = document.getElementById('p_mod').value;
-
-                if(!player || !mod) return alert("请填写完整信息");
-
-                result = `# ${pType}\n玩家：${player}\n时长：${duration}\n原因：${reason}\n\n${mod}\n${date}`;
-            } else if (type === 'appointment') {
-                const staff = document.getElementById('a_staff').value;
+            if(type === 'p') {
+                t = `# ${document.getElementById('p_type').value}\n玩家：${document.getElementById('p_id').value}\n时长：${document.getElementById('p_time').value}\n原因：${document.getElementById('p_reason').value}\n\n${document.getElementById('p_mod').value}\n${date}`;
+            } else if(type === 'a') {
+                const id = document.getElementById('a_id').value;
                 const pos = document.getElementById('a_pos').value;
-                const mod = document.getElementById('a_mod').value;
-                
-                result = `# 任命\n职员：${staff}\n职位：${pos}\n\n现在，${staff} 已是 ${pos}，相关权限已赋予。\n\n${mod}\n${date}`;
+                t = `# 任命\n职员：${id}\n职位：${pos}\n\n现在，${id} 已是 ${pos}，相关权限已赋予。\n\n${document.getElementById('a_mod').value}\n${date}`;
+            } else if(type === 'u') {
+                t = `# 解封\n玩家：${document.getElementById('u_id').value}\n原因：${document.getElementById('u_reason').value}\n\n${document.getElementById('u_mod').value}\n${date}`;
+            } else if(type === 'd') {
+                const id = document.getElementById('d_id').value;
+                const pos = document.getElementById('d_pos').value;
+                t = `# 取消任命\n职员：${id}\n职位：${pos}\n原因：${document.getElementById('d_reason').value}\n\n现在，${id} 已不再是 ${pos}，权限已撤下。\n\n${document.getElementById('d_mod').value}\n${date}`;
             }
 
-            const wrapper = document.getElementById('outputWrapper');
-            const content = document.getElementById('outputContent');
-            content.textContent = result;
-            wrapper.style.display = 'block';
-            
-            // 自动滚动到预览区
-            wrapper.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            const out = document.getElementById('outContent');
+            const box = document.getElementById('outBox');
+            out.textContent = t;
+            box.style.display = 'block';
+            box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
-        function copyToClipboard() {
-            const text = document.getElementById('outputContent').textContent;
-            navigator.clipboard.writeText(text).then(() => {
-                const toast = document.getElementById('toast');
-                toast.style.display = 'block';
-                setTimeout(() => toast.style.display = 'none', 2000);
-            });
+        function copy() {
+            navigator.clipboard.writeText(document.getElementById('outContent').textContent);
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            setTimeout(() => toast.style.display = 'none', 2000);
         }
     </script>
 </body>

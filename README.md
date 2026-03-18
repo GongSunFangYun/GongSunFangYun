@@ -2,5 +2,4 @@
 
 ![Top Langs](https://stats-phi-ivory.vercel.app/api/top-langs/?username=GongSunFangYun&langs_count=20&layout=compact)
 
-支持我的项目：[爱发电链接
-](https://afdian.com/a/wdsjrzfx114514)
+支持我的项目：[爱发电链接](https://afdian.com/a/wdsjrzfx114514)

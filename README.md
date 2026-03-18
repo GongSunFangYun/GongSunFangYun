@@ -1,4 +1,4 @@
-![Anurag's GitHub stats](https://stats-phi-ivory.vercel.app/api?username=GongSunFangYun&lang=zh_cn)
+![GitHub stats](https://stats-phi-ivory.vercel.app/api?username=GongSunFangYun&lang=zh_cn)
 
 ![Top Langs](https://stats-phi-ivory.vercel.app/api/top-langs/?username=GongSunFangYun&langs_count=20&layout=compact)
 

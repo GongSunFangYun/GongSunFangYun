@@ -3,7 +3,7 @@
 > I am an independent game developer and an amateur full-stack developer,  
 > I do these not just to pass my own time but also to contribute to the community...  
 
-I can use these programming languages:
+This is my tech stack:
 
 <div align="left">
 

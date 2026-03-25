@@ -31,4 +31,4 @@ As well as some interesting statistics...
 
 </div>
 
-**Support my project(CN): [AFD](https://afdian.com/a/GongSunFangYun)**
+**Support my project (CN)**: [AFDian](https://afdian.com/a/GongSunFangYun)

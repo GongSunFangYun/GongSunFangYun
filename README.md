@@ -3,14 +3,14 @@
 > I am an independent game developer and an amateur full-stack developer,  
 > I do these not just to pass my own time but also to contribute to the community...  
 
-Thanks to these AI tools...
+Thanks to these AI tools,
 
 <div align="left">
   <img src="https://img.shields.io/badge/Gemini-8E75B2?style=flat-square&logo=googlegemini&logoColor=white" alt="Gemini" />
   <img src="https://img.shields.io/badge/Claude-5A3E2B?style=flat-square&logo=anthropic&logoColor=white" alt="Claude" />
 </div>
 
-These are my development and design tools...
+These are my development and design tools,
 
 <div align="left">
   <img src="https://img.shields.io/badge/Unity-100000?style=flat-square&logo=unity&logoColor=white" alt="Unity" />
@@ -20,7 +20,7 @@ These are my development and design tools...
   <img src="https://img.shields.io/badge/JetBrains-6C3483?style=flat-square&logo=jetbrains&logoColor=white" alt="JetBrains" />
 </div>
 
-These are the programming languages I have learned...
+These are the programming languages I have learned,
 
 <div align="left">
   <img src="https://img.shields.io/badge/C%23-512BD4?style=flat-square&logo=dotnet&logoColor=white" alt="C#" />

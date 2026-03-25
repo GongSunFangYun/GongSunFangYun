@@ -32,4 +32,4 @@ As well as some interesting statistics...
 </div>
 
 **Support my project (CN)**: [AFD](https://afdian.com/a/GongSunFangYun)  
-*（MOT THE **Alternative für Deutschland**, JUST A CHINESE CREATOR PLATFORM, I PROMISE!!!）*
+*（Not the **Alternative für Deutschland**, just a Chinese creator platform, I promise!!!）*

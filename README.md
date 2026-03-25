@@ -1,3 +1,10 @@
+**Hello, My Friend.**
+> My name is GongSunFangYun (NOT IRL NAME),  
+> I am an independent game developer and an amateur full-stack developer,  
+> I do these not just to pass my own time but also to contribute to the community.  
+
+**Support my project(CN): [AFD](https://afdian.com/a/GongSunFangYun)**
+
 <div align="center">
 
 <a>
@@ -8,5 +15,3 @@
 </a>
 
 </div>
-
-支持我的项目：[爱发电链接](https://afdian.com/a/wdsjrzfx114514)

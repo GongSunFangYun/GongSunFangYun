@@ -6,8 +6,8 @@
 > Thanks to these AI tools
 > 
 > <div align="left">
->   <img src="https://img.shields.io/badge/Gemini-8E75B2?style=flat-square&logo=googlegemini&logoColor=white" alt="Gemini" />
->   <img src="https://img.shields.io/badge/Claude-5A3E2B?style=flat-square&logo=anthropic&logoColor=white" alt="Claude" />
+> <img src="https://img.shields.io/badge/Claude-5A3E2B?style=flat-square&logo=anthropic&logoColor=white" alt="Claude" />
+> <img src="https://img.shields.io/badge/DeepSeek-5786FE?style=flat-square&logo=deepseek&logoColor=white" alt="DeepSeek" />
 > </div>
 > 
 > These are my development and design tools
